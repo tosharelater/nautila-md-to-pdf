@@ -31,5 +31,5 @@ jobs:
             echo "ACCESS_KEY=${{ secrets.ACCESS_KEY }}" > .env
 
             # Build and start
-            docker compose up -d --build
+            docker-compose up -d --build
             docker image prune -f
