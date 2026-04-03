@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    name: SSH → pull → docker compose up
+    name: SSH → clone/pull → docker compose up
     runs-on: ubuntu-latest
 
     steps:
@@ -18,11 +18,28 @@ jobs:
           key:      ${{ secrets.VPS_SSH_KEY }}
           script: |
             set -e
-            cd /opt/md-to-pdf
 
-            # Always keep the .env in sync with the GitHub secret
+            # Set up the repo deploy key so git can pull from GitHub
+            mkdir -p ~/.ssh
+            echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
+            chmod 600 ~/.ssh/deploy_key
+            ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
+            export GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
+
+            # First deploy: clone. Every deploy after: pull.
+            if [ ! -d "/opt/md-to-pdf/.git" ]; then
+              git clone git@github.com:Astrall-Digital/md-to-pdf.git /opt/md-to-pdf
+            fi
+
+            cd /opt/md-to-pdf
+            git pull origin main
+
+            # Write the app secret (never stored in git)
             echo "ACCESS_KEY=${{ secrets.ACCESS_KEY }}" > .env
 
-            git pull origin main
+            # Build and start
             docker compose up -d --build
             docker image prune -f
+
+            # Remove deploy key from disk
+            rm -f ~/.ssh/deploy_key
