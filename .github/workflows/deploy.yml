@@ -19,27 +19,17 @@ jobs:
           script: |
             set -e
 
-            # Set up the repo deploy key so git can pull from GitHub
-            mkdir -p ~/.ssh
-            printf '%s\n' "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
-            chmod 600 ~/.ssh/deploy_key
-            ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
-            export GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
-
-            # First deploy: clone. Every deploy after: pull.
+            # First deploy: clone via HTTPS token. Every deploy after: pull.
             if [ ! -d "/opt/md-to-pdf/.git" ]; then
-              git clone git@github.com:Astrall-Digital/md-to-pdf.git /opt/md-to-pdf
+              git clone https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Astrall-Digital/md-to-pdf.git /opt/md-to-pdf
             fi
 
             cd /opt/md-to-pdf
-            git pull origin main
+            git pull https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Astrall-Digital/md-to-pdf.git main
 
-            # Write the app secret (never stored in git)
+            # Write the app secret
             echo "ACCESS_KEY=${{ secrets.ACCESS_KEY }}" > .env
 
             # Build and start
             docker compose up -d --build
             docker image prune -f
-
-            # Remove deploy key from disk
-            rm -f ~/.ssh/deploy_key
