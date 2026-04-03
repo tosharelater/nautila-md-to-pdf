@@ -21,7 +21,7 @@ jobs:
 
             # Set up the repo deploy key so git can pull from GitHub
             mkdir -p ~/.ssh
-            echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
+            printf '%s\n' "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
             chmod 600 ~/.ssh/deploy_key
             ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
             export GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
