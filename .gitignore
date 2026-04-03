@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# env files — never commit secrets
+.env
+.env.local
+.env.*.local
+
+# history data — lives on the VPS, not in git
+data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# TypeScript cache
+tsconfig.tsbuildinfo
+
+# logs
+*.log
+npm-debug.log*
