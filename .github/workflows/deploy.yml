@@ -25,7 +25,11 @@ jobs:
             fi
 
             cd /opt/md-to-pdf
-            git pull https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Astrall-Digital/md-to-pdf.git main
+            # Match GitHub exactly (avoids "divergent branches" on git pull with newer Git)
+            git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Astrall-Digital/md-to-pdf.git
+            git fetch origin main
+            git checkout main
+            git reset --hard origin/main
 
             # Write the app secret (single quotes prevent bash from expanding $ chars)
             echo 'ACCESS_KEY=${{ secrets.ACCESS_KEY }}' > .env
