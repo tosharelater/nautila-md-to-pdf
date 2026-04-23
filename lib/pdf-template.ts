@@ -267,12 +267,14 @@
    //  FOOTER TEMPLATE — removed
    // ════════════════════════════════════════════════════════════════════════════
    export function getFooterTemplate(): string {
-     return `<style>
-       * { margin:0; padding:0; box-sizing:border-box; }
-       html, body { margin:0 !important; padding:0 !important; width:100%; height:100%; display:flex; flex-direction:column; justify-content:flex-end; overflow:visible; }
-     </style>
-     <div style="width:100%;height:8px;background-color:#B8972A;transform:translateY(6mm);-webkit-print-color-adjust:exact;color:transparent;"></div>`
-   }
+    return `<style>
+      * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { margin:0 !important; padding:0 !important; width:100%; height:100%; display:flex; flex-direction:column; justify-content:flex-end; overflow:visible; }
+    </style>
+  <div style="width:100%;height:30px;background-color:#B8972A;display:flex;align-items:center;justify-content:center;transform:translateY(6mm);-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+    <span style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:10px;color:#fff;letter-spacing:0.5px;line-height:30px;">Astral Digital - document confidentiel</span>
+    </div>`
+  }
    
    // ── Helpers ──────────────────────────────────────────────────────────────────
    function escapeHtml(str: string): string {
