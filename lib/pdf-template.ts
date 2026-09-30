@@ -1,24 +1,24 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    PDF Template — Nautila brand
-   Palette: deep ink #16281c · green #415d43 · sage #709775 · mint #a1cca5
-   Three separate HTML generators for 3-PDF merge approach.
+   Palette Atlantique: ink #14333B · teal #2E7D8C · écume #63A6A0 · paper #F2EFE6
    ───────────────────────────────────────────────────────────────────────────── */
 
 export type { MetaField, TemplateOptions } from './types'
 import type { MetaField, TemplateOptions } from './types'
 
-const INK = '#16281c'
-const GREEN = '#415d43'
-const SAGE = '#709775'
-const MINT = '#a1cca5'
-const PAPER = '#fafaf7'
-const SURFACE = '#f2f4f0'
-const TEXT = '#12211a'
-const MUTED = '#3c5045'
+const INK = '#14333B'
+const GREEN = '#2E7D8C'
+const SAGE = '#2E7D8C'
+const MINT = '#63A6A0'
+const PAPER = '#F2EFE6'
+const SURFACE = '#E8E4D6'
+const TEXT = '#14333B'
+const MUTED = '#556f75'
+const CREAM = '#F2EFE6'
 
 // ── CSS logo fallback (shell + wordmark) ─────────────────────────────────────
 function logoHtml(src: string | null | undefined, variant: 'white' | 'dark', sizePx = 46): string {
-  const textColor = variant === 'white' ? '#f2f6f1' : TEXT
+  const textColor = variant === 'white' ? CREAM : TEXT
   const shell = variant === 'white' ? MINT : GREEN
   const dot = variant === 'white' ? MINT : SAGE
 
@@ -102,7 +102,7 @@ export function getCoverTemplate(opts: TemplateOptions = {}): string {
       (f) => `
         <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:7px;">
           <span style="font-weight:700;color:${MINT};font-size:10.5pt;min-width:110px;flex-shrink:0;">${escapeHtml(f.label)}</span>
-          <span style="color:#f2f6f1;font-size:10.5pt;">${escapeHtml(f.value)}</span>
+          <span style="color:${CREAM};font-size:10.5pt;">${escapeHtml(f.value)}</span>
         </div>`
     )
     .join('')
@@ -113,7 +113,7 @@ export function getCoverTemplate(opts: TemplateOptions = {}): string {
     body { background-color: ${INK}; }
     .cover {
       width: 210mm; height: 297mm;
-      background: linear-gradient(165deg, #12211a 0%, ${INK} 45%, #1d3524 100%);
+      background: linear-gradient(165deg, #0f2a30 0%, ${INK} 50%, #1a4048 100%);
       display: flex; flex-direction: column;
       overflow: hidden;
       -webkit-print-color-adjust: exact; print-color-adjust: exact;
@@ -127,14 +127,14 @@ export function getCoverTemplate(opts: TemplateOptions = {}): string {
     </div>
 
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 16mm;">
-      <div style="font-size:36pt;font-weight:800;color:#f6faf6;line-height:1.05;text-transform:uppercase;letter-spacing:-0.02em;margin-bottom:10px;word-break:break-word;">
+      <div style="font-size:36pt;font-weight:800;color:${CREAM};line-height:1.05;text-transform:uppercase;letter-spacing:-0.02em;margin-bottom:10px;word-break:break-word;">
         ${safeTitleUp}
       </div>
 
       ${
         safeSubtitle
           ? `<div style="background-color:${SAGE};padding:7px 6mm;margin-bottom:22px;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
-               <span style="font-size:18pt;font-weight:800;color:#f6faf6;text-transform:uppercase;letter-spacing:-0.01em;">${safeSubtitle}</span>
+               <span style="font-size:18pt;font-weight:800;color:${CREAM};text-transform:uppercase;letter-spacing:-0.01em;">${safeSubtitle}</span>
              </div>`
           : `<div style="width:100%;height:7px;background:linear-gradient(90deg,${GREEN},${MINT});margin-bottom:24px;-webkit-print-color-adjust:exact;print-color-adjust:exact;"></div>`
       }
@@ -194,11 +194,11 @@ export function getContentTemplate(htmlContent: string, opts: TemplateOptions = 
     ol li::marker { color: ${SAGE}; font-weight: 700; }
 
     table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 10pt; }
-    thead tr { background-color: ${GREEN}; color: #ffffff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    thead tr { background-color: ${INK}; color: ${CREAM}; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     thead th { padding: 9px 12px; text-align: left; font-weight: 600; letter-spacing: 0.02em; border: 1px solid ${GREEN}; }
     tbody tr:nth-child(odd) { background-color: ${SURFACE}; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     tbody tr:nth-child(even) { background-color: #ffffff; }
-    tbody td { padding: 8px 12px; border: 1px solid #d5ddd6; line-height: 1.5; color: ${MUTED}; vertical-align: top; }
+    tbody td { padding: 8px 12px; border: 1px solid #d4cfc0; line-height: 1.5; color: ${MUTED}; vertical-align: top; }
 
     pre { background-color: ${SURFACE}; border-left: 4px solid ${SAGE}; padding: 14px 16px; margin: 14px 0 18px; border-radius: 0 4px 4px 0; overflow-x: auto; page-break-inside: avoid; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     pre code { font-family: 'Courier New', Courier, monospace; font-size: 9.5pt; color: ${TEXT}; background: none; padding: 0; line-height: 1.55; }
@@ -228,7 +228,7 @@ export function getEndTemplate(opts: TemplateOptions = {}): string {
     body { background-color: ${INK}; }
     .end {
       width: 210mm; height: 297mm;
-      background: linear-gradient(165deg, #12211a 0%, ${INK} 45%, #1d3524 100%);
+      background: linear-gradient(165deg, #0f2a30 0%, ${INK} 50%, #1a4048 100%);
       display: flex; flex-direction: column;
       overflow: hidden;
       -webkit-print-color-adjust: exact; print-color-adjust: exact;
@@ -242,11 +242,11 @@ export function getEndTemplate(opts: TemplateOptions = {}): string {
     </div>
 
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;padding:0 16mm 8mm;">
-      <div style="font-size:54pt;font-weight:300;color:#f6faf6;line-height:1;text-align:right;">Merci</div>
+      <div style="font-size:54pt;font-weight:300;color:${CREAM};line-height:1;text-align:right;">Merci</div>
       <div style="background-color:${SAGE};display:block;width:100%;text-align:right;padding:5px 6mm;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
-        <span style="font-size:36pt;font-weight:800;color:#f6faf6;line-height:1.15;">Pour Votre</span>
+        <span style="font-size:36pt;font-weight:800;color:${CREAM};line-height:1.15;">Pour Votre</span>
       </div>
-      <div style="font-size:46pt;font-weight:800;color:#f6faf6;line-height:1.1;text-align:right;">Attention</div>
+      <div style="font-size:46pt;font-weight:800;color:${CREAM};line-height:1.1;text-align:right;">Attention</div>
       <div style="width:80px;height:6px;background:linear-gradient(90deg,${GREEN},${MINT});margin-top:14px;align-self:flex-end;border-radius:2px;-webkit-print-color-adjust:exact;print-color-adjust:exact;"></div>
     </div>
 
@@ -272,7 +272,7 @@ export function getHeaderTemplate(title: string): string {
     * { margin:0; padding:0; box-sizing:border-box; }
     html, body { margin:0 !important; padding:0 !important; width:100%; height:100%; }
   </style>
-  <div style="width:calc(100% + 10mm);margin-left:-5mm;margin-top:-10mm;height:24mm;box-sizing:border-box;background-color:${GREEN};display:flex;align-items:flex-end;justify-content:space-between;padding:0 21mm 4mm 21mm;font-family:'Inter',Arial,sans-serif;-webkit-print-color-adjust:exact;color:#f6faf6;font-size:9pt;">
+  <div style="width:calc(100% + 10mm);margin-left:-5mm;margin-top:-10mm;height:24mm;box-sizing:border-box;background-color:${GREEN};display:flex;align-items:flex-end;justify-content:space-between;padding:0 21mm 4mm 21mm;font-family:'Inter',Arial,sans-serif;-webkit-print-color-adjust:exact;color:${CREAM};font-size:9pt;">
     <span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70%;">${safe}</span>
     <span style="font-weight:700;"><span class="pageNumber"></span> / <span class="totalPages"></span></span>
   </div>`
