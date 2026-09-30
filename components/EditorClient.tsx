@@ -13,15 +13,15 @@ const todayFr = new Date().toLocaleDateString('fr-FR', {
 
 const DEFAULT_META: Record<string, MetaField> = {
   date:        { enabled: true,  label: 'Date :',        value: todayFr },
-  prestataire: { enabled: true,  label: 'Prestataire :', value: 'Astral Digital' },
+  prestataire: { enabled: true,  label: 'Prestataire :', value: 'Nautila' },
   version:     { enabled: true,  label: 'Version :',     value: '1.0' },
 }
 
-const EXAMPLE_MARKDOWN = `# Project Proposal: Astral Platform
+const EXAMPLE_MARKDOWN = `# Project Proposal: Nautila Platform
 
 ## Executive Summary
 
-This document outlines the strategic direction for the **Astral Platform** initiative. Our goal is to deliver a world-class digital experience that aligns with our brand values and exceeds client expectations.
+This document outlines the strategic direction for the **Nautila Platform** initiative. Our goal is to align trust, revenue and technology in a single motion — and exceed client expectations.
 
 ## Objectives
 
@@ -78,7 +78,7 @@ The estimated project investment is **$85,000–$110,000** depending on feature 
 
 ---
 
-*Prepared by Astral Digital — Confidential*
+*Prepared by Nautila — Confidential*
 `
 
 /* ── Toggle Switch ───────────────────────────────────────────────────────── */
@@ -103,7 +103,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean
 /* ── Main component ─────────────────────────────────────────────────────── */
 export default function EditorClient() {
   const [markdown,      setMarkdown]      = useState(EXAMPLE_MARKDOWN)
-  const [title,         setTitle]         = useState('Astral Platform Proposal')
+  const [title,         setTitle]         = useState('Nautila Platform Proposal')
   const [subtitle,      setSubtitle]      = useState('')
   const [meta,          setMeta]          = useState(DEFAULT_META)
   const [settingsOpen,  setSettingsOpen]  = useState(false)
@@ -167,27 +167,27 @@ export default function EditorClient() {
   const metaEntries = Object.entries(meta) as [string, MetaField][]
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden" style={{ backgroundColor: '#f0f2f7' }}>
+    <div className="h-screen flex flex-col overflow-hidden" style={{ backgroundColor: '#f2f4f0' }}>
 
       {/* ── Navbar ─────────────────────────────────────────────────────── */}
       <header
         className="flex-shrink-0 flex items-center justify-between px-5 shadow-md z-20"
-        style={{ backgroundColor: '#0f325a', height: '52px' }}
+        style={{ backgroundColor: '#16281c', height: '52px' }}
       >
         {/* Brand */}
         <div className="flex items-center gap-3">
           <div
-            className="flex items-center justify-center rounded flex-shrink-0"
-            style={{ width: '28px', height: '28px', backgroundColor: '#B8972A' }}
+            className="flex items-center justify-center rounded-full flex-shrink-0"
+            style={{ width: '28px', height: '28px', backgroundColor: 'rgba(161,204,165,0.2)', border: '1px solid rgba(161,204,165,0.35)' }}
           >
-            <svg width="14" height="14" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-              <path d="M3 15L9 3L15 15H3Z" fill="white" />
+            <svg width="16" height="14" viewBox="-20 -2 80 60" fill="none" aria-hidden="true">
+              <path d="M42 6 A36 36 0 0 1 6 42 A22.25 22.25 0 0 1 -16.25 19.75 A13.75 13.75 0 0 1 -2.5 6 A8.5 8.5 0 0 1 6 14.5 A5.25 5.25 0 0 1 0.75 19.75" stroke="#a1cca5" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
           <span className="font-bold text-white tracking-wide select-none" style={{ fontSize: '14px' }}>
             MD to PDF
           </span>
-          <span className="hidden sm:block text-xs" style={{ color: '#7b9cc4' }}>by Astral Digital</span>
+          <span className="hidden sm:block text-xs" style={{ color: '#8fb996' }}>by Nautila</span>
         </div>
 
         {/* Right side: history + settings toggle + export */}
@@ -197,10 +197,10 @@ export default function EditorClient() {
             onClick={() => setHistoryOpen(v => !v)}
             className="flex items-center gap-1.5 text-xs font-medium rounded px-3 py-1.5 transition-colors"
             style={{
-              color: historyOpen ? '#0f325a' : '#c0d0e8',
-              backgroundColor: historyOpen ? '#B8972A' : 'rgba(255,255,255,0.08)',
+              color: historyOpen ? '#16281c' : '#c5dcc8',
+              backgroundColor: historyOpen ? '#a1cca5' : 'rgba(255,255,255,0.08)',
               border: '1px solid',
-              borderColor: historyOpen ? '#B8972A' : 'rgba(255,255,255,0.15)',
+              borderColor: historyOpen ? '#a1cca5' : 'rgba(255,255,255,0.15)',
             }}
           >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -214,10 +214,10 @@ export default function EditorClient() {
             onClick={() => setSettingsOpen(v => !v)}
             className="flex items-center gap-1.5 text-xs font-medium rounded px-3 py-1.5 transition-colors"
             style={{
-              color: settingsOpen ? '#0f325a' : '#c0d0e8',
-              backgroundColor: settingsOpen ? '#B8972A' : 'rgba(255,255,255,0.08)',
+              color: settingsOpen ? '#16281c' : '#c5dcc8',
+              backgroundColor: settingsOpen ? '#a1cca5' : 'rgba(255,255,255,0.08)',
               border: '1px solid',
-              borderColor: settingsOpen ? '#B8972A' : 'rgba(255,255,255,0.15)',
+              borderColor: settingsOpen ? '#a1cca5' : 'rgba(255,255,255,0.15)',
             }}
           >
             <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor">
@@ -230,7 +230,7 @@ export default function EditorClient() {
             onClick={handleExport}
             disabled={exporting}
             className="flex items-center gap-1.5 font-semibold text-sm rounded-lg px-4 py-1.5 transition-colors shadow disabled:opacity-60 disabled:cursor-not-allowed"
-            style={{ backgroundColor: '#B8972A', color: '#fff' }}
+            style={{ backgroundColor: '#709775', color: '#fff' }}
           >
             {exporting ? (
               <>
@@ -271,14 +271,14 @@ export default function EditorClient() {
                 onChange={e => setTitle(e.target.value)}
                 placeholder="Title…"
                 className="border rounded px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-offset-0"
-                style={{ borderColor: '#d0d8ea', color: '#0f325a' }}
+                style={{ borderColor: '#d0d8ea', color: '#415d43' }}
               />
             </div>
 
             {/* Subtitle */}
             <div className="flex flex-col gap-1 min-w-[200px] flex-1">
               <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#6b7a99' }}>
-                Subtitle <span className="normal-case font-normal" style={{ color: '#9aabc' }}>(shown in gold bar)</span>
+                Subtitle <span className="normal-case font-normal" style={{ color: '#9aabc' }}>(shown in sage bar)</span>
               </label>
               <input
                 type="text"
@@ -286,7 +286,7 @@ export default function EditorClient() {
                 onChange={e => setSubtitle(e.target.value)}
                 placeholder="e.g. Fonctionnel et Technique…"
                 className="border rounded px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-offset-0"
-                style={{ borderColor: '#d0d8ea', color: '#0f325a' }}
+                style={{ borderColor: '#d0d8ea', color: '#415d43' }}
               />
             </div>
 
@@ -303,7 +303,7 @@ export default function EditorClient() {
                   />
                   <label
                     className="text-xs font-semibold uppercase tracking-wider cursor-pointer select-none"
-                    style={{ color: field.enabled ? '#0f325a' : '#9aabc' }}
+                    style={{ color: field.enabled ? '#415d43' : '#9aabc' }}
                     onClick={() => updateMeta(id, { enabled: !field.enabled })}
                   >
                     {field.label.replace(':', '')}
@@ -315,7 +315,7 @@ export default function EditorClient() {
                   onChange={e => updateMeta(id, { value: e.target.value })}
                   disabled={!field.enabled}
                   className="border rounded px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
-                  style={{ borderColor: '#d0d8ea', color: '#0f325a' }}
+                  style={{ borderColor: '#d0d8ea', color: '#415d43' }}
                 />
               </div>
             ))}
@@ -327,13 +327,13 @@ export default function EditorClient() {
       <div className="flex flex-1 overflow-hidden">
 
         {/* Left — editor */}
-        <div className="w-1/2 flex flex-col border-r" style={{ borderColor: '#d8dff0', backgroundColor: '#fff' }}>
+        <div className="w-1/2 flex flex-col border-r" style={{ borderColor: '#d5ddd6', backgroundColor: '#fff' }}>
           <div
             className="flex-shrink-0 flex items-center gap-2 px-4 py-2 border-b"
-            style={{ backgroundColor: '#f8f9fc', borderColor: '#e8edf5' }}
+            style={{ backgroundColor: '#fafaf7', borderColor: '#e9ede7' }}
           >
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#B8972A' }} />
-            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#7b8fad' }}>
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#709775' }} />
+            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#5f7268' }}>
               Markdown
             </span>
           </div>
@@ -341,13 +341,13 @@ export default function EditorClient() {
         </div>
 
         {/* Right — preview */}
-        <div className="w-1/2 flex flex-col" style={{ backgroundColor: '#dde2ec' }}>
+        <div className="w-1/2 flex flex-col" style={{ backgroundColor: '#e9ede7' }}>
           <div
             className="flex-shrink-0 flex items-center gap-2 px-4 py-2 border-b"
-            style={{ backgroundColor: '#f0f2f7', borderColor: '#d0d8e8' }}
+            style={{ backgroundColor: '#f2f4f0', borderColor: '#d5ddd6' }}
           >
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#3B72B0' }} />
-            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#7b8fad' }}>
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#415d43' }} />
+            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#5f7268' }}>
               PDF Preview
             </span>
           </div>

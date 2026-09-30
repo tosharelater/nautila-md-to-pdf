@@ -3,6 +3,9 @@
 import { useState, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 
+const SHELL =
+  'M42 6 A36 36 0 0 1 6 42 A22.25 22.25 0 0 1 -16.25 19.75 A13.75 13.75 0 0 1 -2.5 6 A8.5 8.5 0 0 1 6 14.5 A5.25 5.25 0 0 1 0.75 19.75'
+
 export default function LoginPage() {
   const [key, setKey] = useState('')
   const [error, setError] = useState('')
@@ -34,25 +37,29 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-off-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-paper flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        {/* Card */}
-        <div className="bg-white rounded-xl shadow-xl overflow-hidden">
-          {/* Navy header */}
-          <div className="bg-navy px-8 py-7">
+        <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-black/5">
+          <div className="bg-ink px-8 py-7">
             <div className="flex items-center gap-3 mb-1">
-              {/* Logo mark */}
-              <div className="w-8 h-8 rounded-md bg-gold flex items-center justify-center flex-shrink-0">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                  <path d="M3 14L9 4L15 14H3Z" fill="white" />
+              <div className="w-9 h-9 rounded-full bg-green/30 flex items-center justify-center flex-shrink-0 ring-1 ring-mint/40">
+                <svg width="22" height="18" viewBox="-20 -2 80 60" fill="none" aria-hidden="true">
+                  <path
+                    d={SHELL}
+                    stroke="#a1cca5"
+                    strokeWidth="5.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </div>
-              <span className="text-white font-semibold text-lg tracking-wide">Astral Digital</span>
+              <span className="text-white font-semibold text-lg tracking-wide">
+                Nautila<span className="text-mint">.</span>
+              </span>
             </div>
-            <p className="text-blue-200 text-sm mt-2 ml-11">MD → PDF Converter</p>
+            <p className="text-mint/80 text-sm mt-2 ml-12">MD → PDF Converter</p>
           </div>
 
-          {/* Form body */}
           <form onSubmit={handleSubmit} className="px-8 py-8">
             <h1 className="text-dark-text font-semibold text-xl mb-1">Welcome back</h1>
             <p className="text-gray-500 text-sm mb-6">Enter your access key to continue.</p>
@@ -76,7 +83,7 @@ export default function LoginPage() {
                 autoComplete="current-password"
                 required
                 className={`w-full px-4 py-2.5 border rounded-lg text-sm outline-none transition-colors
-                  focus:ring-2 focus:ring-navy/30 focus:border-navy
+                  focus:ring-2 focus:ring-sage/30 focus:border-sage
                   ${error ? 'border-red-400 bg-red-50' : 'border-gray-300 bg-white'}
                 `}
               />
@@ -102,8 +109,8 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading || !key.trim()}
-              className="w-full bg-navy text-white font-semibold py-2.5 px-4 rounded-lg
-                hover:bg-[#162650] active:bg-[#111e40]
+              className="w-full bg-green text-white font-semibold py-2.5 px-4 rounded-lg
+                hover:bg-ink active:bg-[#0e1a12]
                 disabled:opacity-60 disabled:cursor-not-allowed
                 transition-colors duration-150 flex items-center justify-center gap-2"
             >
@@ -136,7 +143,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-xs text-gray-400 mt-5">
-          &copy; {new Date().getFullYear()} Astral Digital. All rights reserved.
+          &copy; {new Date().getFullYear()} Nautila. All rights reserved.
         </p>
       </div>
     </div>

@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'MD to PDF | Astral Digital',
-  description: 'Convert Markdown to beautifully styled PDFs — Astral Digital',
+  title: 'MD to PDF | Nautila',
+  description: 'Convert Markdown to beautifully styled PDFs — Nautila',
 }
 
 export default function RootLayout({

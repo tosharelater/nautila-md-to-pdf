@@ -83,17 +83,17 @@ export default function HistoryDrawer({ open, onClose, onLoad }: Props) {
         {/* Header */}
         <div
           className="flex-shrink-0 flex items-center justify-between px-5 py-4 border-b"
-          style={{ backgroundColor: '#0f325a', borderColor: '#1a4070' }}
+          style={{ backgroundColor: '#16281c', borderColor: '#1d3524' }}
         >
           <div className="flex items-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8972A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a1cca5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/>
             </svg>
             <span className="font-semibold text-white text-sm tracking-wide">Conversion History</span>
           </div>
           <button
             onClick={onClose}
-            className="text-blue-300 hover:text-white transition-colors p-1 rounded"
+            className="text-mint/80 hover:text-white transition-colors p-1 rounded"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <path d="M6 18L18 6M6 6l12 12"/>
@@ -102,12 +102,12 @@ export default function HistoryDrawer({ open, onClose, onLoad }: Props) {
         </div>
 
         {/* List */}
-        <div className="flex-1 overflow-y-auto" style={{ backgroundColor: '#f5f7fc' }}>
+        <div className="flex-1 overflow-y-auto" style={{ backgroundColor: '#fafaf7' }}>
           {loading ? (
             <div className="flex items-center justify-center h-32">
               <svg className="animate-spin w-6 h-6" viewBox="0 0 24 24" fill="none">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="#0f325a" strokeWidth="4"/>
-                <path className="opacity-75" fill="#0f325a" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="#415d43" strokeWidth="4"/>
+                <path className="opacity-75" fill="#415d43" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
               </svg>
             </div>
           ) : entries.length === 0 ? (
@@ -128,7 +128,7 @@ export default function HistoryDrawer({ open, onClose, onLoad }: Props) {
                   <div className="flex items-start justify-between gap-2">
                     <span
                       className="font-semibold text-sm leading-tight flex-1 truncate"
-                      style={{ color: '#0f325a' }}
+                      style={{ color: '#415d43' }}
                       title={entry.title}
                     >
                       {entry.title || 'Untitled'}
@@ -142,7 +142,7 @@ export default function HistoryDrawer({ open, onClose, onLoad }: Props) {
                   {entry.subtitle && (
                     <span
                       className="self-start text-xs px-1.5 py-0.5 rounded font-medium"
-                      style={{ backgroundColor: '#fef3c7', color: '#92650a' }}
+                      style={{ backgroundColor: '#e9ede7', color: '#415d43' }}
                     >
                       {entry.subtitle}
                     </span>
@@ -158,7 +158,7 @@ export default function HistoryDrawer({ open, onClose, onLoad }: Props) {
                     <button
                       onClick={() => { onLoad(entry); onClose() }}
                       className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded transition-colors"
-                      style={{ backgroundColor: '#0f325a', color: '#fff' }}
+                      style={{ backgroundColor: '#415d43', color: '#fff' }}
                     >
                       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                         <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/>

@@ -5,11 +5,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --navy: #0f355a;
-  --gold: #B8972A;
-  --steel-blue: #3B72B0;
-  --off-white: #F8F9FA;
-  --dark-text: #222222;
+  --ink: #16281c;
+  --green: #415d43;
+  --sage: #709775;
+  --mint: #a1cca5;
+  --paper: #fafaf7;
+  --surface: #f2f4f0;
+  --dark-text: #12211a;
+  /* legacy aliases used by some components */
+  --navy: #415d43;
+  --gold: #709775;
+  --steel-blue: #8fb996;
+  --off-white: #fafaf7;
 }
 
 * {
@@ -19,7 +26,7 @@
 html,
 body {
   font-family: 'Inter', Arial, sans-serif;
-  background-color: var(--off-white);
+  background-color: var(--paper);
   color: var(--dark-text);
 }
 
@@ -32,25 +39,25 @@ body {
   background: #f1f1f1;
 }
 ::-webkit-scrollbar-thumb {
-  background: #c1c8d6;
+  background: #b5c4b8;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #9aa3b5;
+  background: #8a9a90;
 }
 
 /* ---- Preview panel — mirrors PDF template styles ---- */
 .pdf-preview {
   font-family: 'Inter', Arial, sans-serif;
   font-size: 11pt;
-  color: #333333;
+  color: #3c5045;
   line-height: 1.7;
 }
 
 .pdf-preview h1 {
   font-size: 22pt;
   font-weight: 700;
-  color: #0f325a;
+  color: #415d43;
   margin-bottom: 20px;
   margin-top: 24px;
   line-height: 1.25;
@@ -59,7 +66,7 @@ body {
 .pdf-preview h2 {
   font-size: 15pt;
   font-weight: 700;
-  color: #3B72B0;
+  color: #709775;
   margin-top: 2em;
   margin-bottom: 10px;
   line-height: 1.3;
@@ -68,7 +75,7 @@ body {
 .pdf-preview h3 {
   font-size: 12pt;
   font-weight: 600;
-  color: #3B72B0;
+  color: #709775;
   font-style: italic;
   margin-top: 1.5em;
   margin-bottom: 8px;
@@ -77,7 +84,7 @@ body {
 .pdf-preview h4 {
   font-size: 11pt;
   font-weight: 700;
-  color: #0f325a;
+  color: #415d43;
   margin-top: 1.2em;
   margin-bottom: 6px;
 }
@@ -86,31 +93,31 @@ body {
 .pdf-preview h6 {
   font-size: 10.5pt;
   font-weight: 600;
-  color: #3B72B0;
+  color: #709775;
   margin-top: 1em;
   margin-bottom: 4px;
 }
 
 .pdf-preview p {
   line-height: 1.7;
-  color: #333333;
+  color: #3c5045;
   margin-bottom: 12px;
 }
 
 .pdf-preview strong,
 .pdf-preview b {
   font-weight: 700;
-  color: #0f325a;
+  color: #12211a;
 }
 
 .pdf-preview em,
 .pdf-preview i {
   font-style: italic;
-  color: #444444;
+  color: #3c5045;
 }
 
 .pdf-preview a {
-  color: #3B72B0;
+  color: #415d43;
   text-decoration: underline;
 }
 
@@ -125,14 +132,14 @@ body {
   padding-left: 16px;
   margin-bottom: 6px;
   line-height: 1.65;
-  color: #333333;
+  color: #3c5045;
 }
 
 .pdf-preview ul li::before {
   content: '●';
   position: absolute;
   left: 0;
-  color: #B8972A;
+  color: #709775;
   font-size: 9pt;
   top: 1px;
 }
@@ -145,12 +152,12 @@ body {
 .pdf-preview ol li {
   margin-bottom: 6px;
   line-height: 1.65;
-  color: #333333;
+  color: #3c5045;
   padding-left: 4px;
 }
 
 .pdf-preview ol li::marker {
-  color: #B8972A;
+  color: #709775;
   font-weight: 700;
 }
 
@@ -162,7 +169,7 @@ body {
 }
 
 .pdf-preview thead tr {
-  background-color: #0f325a;
+  background-color: #415d43;
   color: #ffffff;
 }
 
@@ -170,11 +177,11 @@ body {
   padding: 9px 12px;
   text-align: left;
   font-weight: 600;
-  border: 1px solid #0f325a;
+  border: 1px solid #415d43;
 }
 
 .pdf-preview tbody tr:nth-child(odd) {
-  background-color: #F0F4FF;
+  background-color: #f2f4f0;
 }
 
 .pdf-preview tbody tr:nth-child(even) {
@@ -183,15 +190,15 @@ body {
 
 .pdf-preview tbody td {
   padding: 8px 12px;
-  border: 1px solid #dddddd;
+  border: 1px solid #d5ddd6;
   line-height: 1.5;
-  color: #333333;
+  color: #3c5045;
   vertical-align: top;
 }
 
 .pdf-preview pre {
-  background-color: #F0F0F0;
-  border-left: 4px solid #B8972A;
+  background-color: #f2f4f0;
+  border-left: 4px solid #709775;
   padding: 14px 16px;
   margin: 14px 0 18px 0;
   border-radius: 0 4px 4px 0;
@@ -201,7 +208,7 @@ body {
 .pdf-preview pre code {
   font-family: 'Courier New', Courier, monospace;
   font-size: 9.5pt;
-  color: #222222;
+  color: #12211a;
   background: none;
   padding: 0;
   border-radius: 0;
@@ -211,31 +218,31 @@ body {
 .pdf-preview code {
   font-family: 'Courier New', Courier, monospace;
   font-size: 9.5pt;
-  background-color: #F0F0F0;
+  background-color: #f2f4f0;
   padding: 2px 5px;
   border-radius: 3px;
-  color: #0f325a;
+  color: #415d43;
 }
 
 .pdf-preview blockquote {
-  border-left: 4px solid #3B72B0;
+  border-left: 4px solid #a1cca5;
   margin: 14px 0;
   padding: 10px 16px;
-  background-color: #f4f7fc;
+  background-color: #f2f4f0;
   border-radius: 0 4px 4px 0;
 }
 
 .pdf-preview blockquote p {
-  color: #444444;
+  color: #3c5045;
   font-style: italic;
   margin-bottom: 0;
 }
 
 .pdf-preview hr {
   border: none;
-  border-top: 2px solid #B8972A;
+  border-top: 2px solid #709775;
   margin: 24px 0;
-  opacity: 0.5;
+  opacity: 0.45;
 }
 
 .pdf-preview img {
@@ -245,13 +252,11 @@ body {
   margin: 10px 0;
 }
 
-/* ── nested list second level ── */
 .pdf-preview ul ul li::before {
   content: '○';
-  color: #3B72B0;
+  color: #a1cca5;
 }
 
-/* ── first h1 on content pages should not have extra top margin ── */
 .pdf-preview > h1:first-child {
   margin-top: 0;
 }
