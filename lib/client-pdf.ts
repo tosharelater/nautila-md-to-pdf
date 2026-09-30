@@ -82,26 +82,74 @@ export async function buildPrintableHtml(input: ExportInput): Promise<string> {
 }
 
 /**
- * Opens a print window so the user can "Save as PDF".
- * This is the reliable static-hosting approach (GitHub Pages compatible).
+ * Prints via a hidden same-origin iframe (no window.open → no popup blocker).
+ * User picks “Save as PDF” in the browser print dialog.
  */
 export async function exportPdfViaPrint(input: ExportInput): Promise<void> {
   const html = await buildPrintableHtml(input)
-  const w = window.open('', '_blank', 'noopener,noreferrer,width=900,height=700')
-  if (!w) {
-    throw new Error('Pop-up blocked. Allow pop-ups for this site, then try again.')
-  }
-  w.document.open()
-  w.document.write(html)
-  w.document.close()
-  /* Wait for fonts/images, then print */
-  await new Promise<void>((resolve) => {
-    const done = () => resolve()
-    if (w.document.readyState === 'complete') setTimeout(done, 400)
-    else w.addEventListener('load', () => setTimeout(done, 400))
+
+  const iframe = document.createElement('iframe')
+  iframe.setAttribute('aria-hidden', 'true')
+  iframe.setAttribute('title', 'PDF print')
+  /* Off-screen but sized — zero-size iframes fail to print in some browsers */
+  Object.assign(iframe.style, {
+    position: 'fixed',
+    left: '0',
+    top: '0',
+    width: '210mm',
+    height: '297mm',
+    border: '0',
+    opacity: '0',
+    pointerEvents: 'none',
+    zIndex: '-1',
   })
-  w.focus()
-  w.print()
+  document.body.appendChild(iframe)
+
+  const doc = iframe.contentDocument
+  const win = iframe.contentWindow
+  if (!doc || !win) {
+    iframe.remove()
+    throw new Error('Could not prepare the print view. Try again.')
+  }
+
+  doc.open()
+  doc.write(html)
+  doc.close()
+
+  await new Promise<void>((resolve) => {
+    const finish = () => resolve()
+    const imgs = Array.from(doc.images || [])
+    if (!imgs.length) {
+      setTimeout(finish, 450)
+      return
+    }
+    let pending = imgs.length
+    const tick = () => {
+      pending -= 1
+      if (pending <= 0) setTimeout(finish, 200)
+    }
+    imgs.forEach((img) => {
+      if (img.complete) tick()
+      else {
+        img.addEventListener('load', tick)
+        img.addEventListener('error', tick)
+      }
+    })
+    setTimeout(finish, 2500)
+  })
+
+  const cleanup = () => {
+    try {
+      iframe.remove()
+    } catch {
+      /* ignore */
+    }
+  }
+  win.addEventListener('afterprint', cleanup)
+  setTimeout(cleanup, 120_000)
+
+  win.focus()
+  win.print()
 }
 
 const HISTORY_KEY = 'nautila-md-to-pdf-history'
