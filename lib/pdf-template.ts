@@ -291,6 +291,21 @@ export function getFooterTemplate(): string {
   </div>`
 }
 
+/** Browser-print header (table thead) — mirrors Puppeteer headerTemplate */
+export function getPrintContentHeader(title: string): string {
+  const safe = escapeHtml(title)
+  return `<div style="width:100%;height:18mm;box-sizing:border-box;background-color:${GREEN};display:flex;align-items:flex-end;justify-content:space-between;padding:0 16mm 3.5mm 16mm;font-family:'Inter',Arial,sans-serif;color:${CREAM};font-size:9pt;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+    <span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;">${safe}</span>
+  </div>`
+}
+
+/** Browser-print footer (table tfoot) — mirrors Puppeteer footerTemplate */
+export function getPrintContentFooter(): string {
+  return `<div style="width:100%;height:9mm;box-sizing:border-box;background-color:${SAGE};display:flex;align-items:center;justify-content:center;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+    <span style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:10px;color:#fff;letter-spacing:0.5px;">Nautila — Document confidentiel</span>
+  </div>`
+}
+
 // ── Helpers ──────────────────────────────────────────────────────────────────
 function escapeHtml(str: string): string {
   return str

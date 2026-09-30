@@ -1,12 +1,15 @@
 /**
  * Client-side PDF export for GitHub Pages (no Puppeteer / no server).
- * Renders Nautila-branded HTML and prints it to a downloadable PDF via the browser.
+ * Layout mirrors the original 3-PDF merge:
+ *   cover (full bleed) → content (repeating header/footer) → end (full bleed)
  */
 import { marked } from 'marked'
 import {
   getCoverTemplate,
   getContentTemplate,
   getEndTemplate,
+  getPrintContentHeader,
+  getPrintContentFooter,
 } from './pdf-template'
 import type { MetaField } from './types'
 
@@ -28,7 +31,17 @@ function logoUrl(): string {
   return `${basePath()}/logo.svg`
 }
 
-/** Build one printable HTML document (cover + content + end). */
+function bodyOf(html: string): string {
+  const m = html.match(/<body[^>]*>([\s\S]*)<\/body>/i)
+  return m ? m[1] : html
+}
+
+function styleOf(html: string): string {
+  const m = html.match(/<style[^>]*>([\s\S]*?)<\/style>/i)
+  return m ? m[1] : ''
+}
+
+/** Build one printable HTML document matching the original Puppeteer layout. */
 export async function buildPrintableHtml(input: ExportInput): Promise<string> {
   const rawHtml = await marked.parse(input.markdown, { gfm: true, breaks: false })
   const documentTitle = input.title?.trim() || 'Document'
@@ -43,16 +56,11 @@ export async function buildPrintableHtml(input: ExportInput): Promise<string> {
   const content = getContentTemplate(rawHtml, opts)
   const end = getEndTemplate(opts)
 
-  /* Strip outer html shells and compose a single print document */
-  const bodyOf = (html: string) => {
-    const m = html.match(/<body[^>]*>([\s\S]*)<\/body>/i)
-    return m ? m[1] : html
-  }
-  const styleOf = (html: string) => {
-    const m = html.match(/<style[^>]*>([\s\S]*?)<\/style>/i)
-    return m ? m[1] : ''
-  }
-
+  /*
+   * Content chrome uses a table thead/tfoot so the header & footer repeat on
+   * content pages only (Chrome-friendly). Cover/end stay outside that table —
+   * same structure as the old cover PDF + content PDF + end PDF merge.
+   */
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -64,19 +72,85 @@ export async function buildPrintableHtml(input: ExportInput): Promise<string> {
     ${styleOf(cover)}
     ${styleOf(content)}
     ${styleOf(end)}
+
     @page { size: A4; margin: 0; }
-    html, body { margin: 0; padding: 0; background: #fff; }
-    .print-section { page-break-after: always; break-after: page; }
-    .print-section:last-child { page-break-after: auto; break-after: auto; }
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #fff !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page-cover,
+    .page-end {
+      page-break-after: always;
+      break-after: page;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .page-cover .cover,
+    .page-end .end {
+      width: 210mm;
+      height: 297mm;
+      max-height: 297mm;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    /* Content block — header/footer via table groups (Puppeteer displayHeaderFooter equivalent) */
+    .content-table {
+      width: 100%;
+      border-collapse: collapse;
+      page-break-after: always;
+      break-after: page;
+    }
+    .content-table thead { display: table-header-group; }
+    .content-table tfoot { display: table-footer-group; }
+    .content-table thead td,
+    .content-table tfoot td,
+    .content-table tbody td {
+      padding: 0;
+      margin: 0;
+      border: 0;
+      vertical-align: top;
+    }
+    /* Match Puppeteer content margins: top ~25mm (header), bottom ~10mm (footer), sides via inner pad */
+    .content-table tbody td {
+      background: #F2EFE6;
+    }
+    .content-table .md-pad {
+      /* Horizontal pad already on content template (60px); vertical clears header/footer */
+      padding: 4mm 0 2mm;
+      box-sizing: border-box;
+    }
+
     @media print {
       .no-print { display: none !important; }
+      .page-cover .cover,
+      .page-end .end {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="print-section">${bodyOf(cover)}</div>
-  <div class="print-section" style="padding:18mm 0 20mm;">${bodyOf(content)}</div>
-  <div class="print-section">${bodyOf(end)}</div>
+  <section class="page-cover">${bodyOf(cover)}</section>
+
+  <table class="content-table">
+    <thead>
+      <tr><td>${getPrintContentHeader(documentTitle)}</td></tr>
+    </thead>
+    <tfoot>
+      <tr><td>${getPrintContentFooter()}</td></tr>
+    </tfoot>
+    <tbody>
+      <tr><td><div class="md-pad">${bodyOf(content)}</div></td></tr>
+    </tbody>
+  </table>
+
+  <section class="page-end">${bodyOf(end)}</section>
 </body>
 </html>`
 }
@@ -91,7 +165,6 @@ export async function exportPdfViaPrint(input: ExportInput): Promise<void> {
   const iframe = document.createElement('iframe')
   iframe.setAttribute('aria-hidden', 'true')
   iframe.setAttribute('title', 'PDF print')
-  /* Off-screen but sized — zero-size iframes fail to print in some browsers */
   Object.assign(iframe.style, {
     position: 'fixed',
     left: '0',

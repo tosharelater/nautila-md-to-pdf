@@ -74,29 +74,24 @@ function PageHeader({ title }: { title: string }) {
     <div
       style={{
         backgroundColor: GREEN,
-        height: '14mm',
-        padding: '0 16mm',
+        height: '18mm',
+        padding: '0 16mm 3.5mm',
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         justifyContent: 'space-between',
         flexShrink: 0,
+        boxSizing: 'border-box',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <ShellMark color={MINT} size={22} />
-        <span style={{ color: '#fff', fontSize: '8pt', fontWeight: 700, letterSpacing: '0.04em' }}>
-          Nautila
-        </span>
-      </div>
       <span
         style={{
-          color: 'rgba(242,246,241,0.65)',
-          fontSize: '7.5pt',
-          fontStyle: 'italic',
+          color: '#F2EFE6',
+          fontSize: '9pt',
+          fontWeight: 600,
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
-          maxWidth: '55%',
+          maxWidth: '100%',
         }}
       >
         {title || 'Document'}
@@ -107,21 +102,19 @@ function PageHeader({ title }: { title: string }) {
 
 function PageFooter() {
   return (
-    <div style={{ flexShrink: 0 }}>
-      <div style={{ height: '5px', background: `linear-gradient(90deg, ${GREEN}, ${MINT})` }} />
-      <div
-        style={{
-          height: '13mm',
-          backgroundColor: INK,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <span style={{ color: '#fff', fontSize: '7.5pt', letterSpacing: '0.07em' }}>
-          Nautila &nbsp;&nbsp;|&nbsp;&nbsp; Confidentiel
-        </span>
-      </div>
+    <div
+      style={{
+        flexShrink: 0,
+        height: '9mm',
+        backgroundColor: SAGE,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <span style={{ color: '#fff', fontSize: '10px', letterSpacing: '0.5px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
+        Nautila — Document confidentiel
+      </span>
     </div>
   )
 }
