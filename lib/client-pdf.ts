@@ -118,15 +118,21 @@ export async function buildPrintableHtml(input: ExportInput): Promise<string> {
     /* Match Puppeteer content margins: top ~25mm (header), bottom ~10mm (footer), sides via inner pad */
     .content-table tbody td {
       background: #F2EFE6;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
     .content-table .md-pad {
       /* Horizontal pad already on content template (60px); vertical clears header/footer */
-      padding: 4mm 0 2mm;
+      padding: 2mm 0 2mm;
       box-sizing: border-box;
     }
 
     @media print {
       .no-print { display: none !important; }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
       .page-cover .cover,
       .page-end .end {
         -webkit-print-color-adjust: exact;

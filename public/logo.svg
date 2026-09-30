@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 72" fill="none">
-  <!-- Nautila wordmark + shell — light on dark -->
+  <!-- Light logo for dark backgrounds — solid opaque fills -->
   <g transform="translate(8, 8)">
     <path
       d="M42 6 A36 36 0 0 1 6 42 A22.25 22.25 0 0 1 -16.25 19.75 A13.75 13.75 0 0 1 -2.5 6 A8.5 8.5 0 0 1 6 14.5 A5.25 5.25 0 0 1 0.75 19.75"
@@ -16,7 +16,7 @@
     font-family="Inter, Arial, sans-serif"
     font-size="32"
     font-weight="700"
-    fill="#F2EFE6"
+    fill="#F6FAF6"
     letter-spacing="-0.5"
   >Nautila</text>
   <circle cx="214" cy="40" r="3.5" fill="#63A6A0"/>

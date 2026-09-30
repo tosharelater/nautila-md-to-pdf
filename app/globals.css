@@ -242,9 +242,8 @@ body {
 
 .pdf-preview hr {
   border: none;
-  border-top: 2px solid #2E7D8C;
+  border-top: 2px solid #a8c9c6;
   margin: 24px 0;
-  opacity: 0.45;
 }
 
 .pdf-preview img {
