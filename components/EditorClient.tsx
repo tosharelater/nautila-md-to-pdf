@@ -138,25 +138,10 @@ export default function EditorClient() {
     }
     setExporting(true)
     try {
-      const res = await fetch('/api/convert', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ markdown, title, subtitle, meta }),
-      })
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}))
-        throw new Error((data as { error?: string }).error || `Server error ${res.status}`)
-      }
-      const blob = await res.blob()
-      const url  = URL.createObjectURL(blob)
-      const a    = document.createElement('a')
-      a.href     = url
-      a.download = `${title.trim().replace(/[^a-z0-9_\-\s]/gi, '').replace(/\s+/g, '-').toLowerCase() || 'document'}.pdf`
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
-      showToast('success', 'PDF exported successfully!')
+      const { exportPdfViaPrint, saveHistoryEntry } = await import('@/lib/client-pdf')
+      await exportPdfViaPrint({ markdown, title, subtitle, meta })
+      saveHistoryEntry({ markdown, title, subtitle, meta })
+      showToast('success', 'Print dialog opened — choose “Save as PDF”.')
     } catch (err) {
       showToast('error', err instanceof Error ? err.message : 'Failed to export PDF.')
     } finally {

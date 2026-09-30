@@ -34,8 +34,8 @@ export default function HistoryDrawer({ open, onClose, onLoad }: Props) {
   const fetchHistory = useCallback(async () => {
     setLoading(true)
     try {
-      const res = await fetch('/api/history')
-      if (res.ok) setEntries(await res.json())
+      const { loadHistory } = await import('@/lib/client-pdf')
+      setEntries(loadHistory())
     } finally {
       setLoading(false)
     }
@@ -48,12 +48,9 @@ export default function HistoryDrawer({ open, onClose, onLoad }: Props) {
   async function handleDelete(id: string) {
     setDeleting(id)
     try {
-      await fetch('/api/history', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id }),
-      })
-      setEntries(prev => prev.filter(e => e.id !== id))
+      const { deleteHistoryEntry, loadHistory } = await import('@/lib/client-pdf')
+      deleteHistoryEntry(id)
+      setEntries(loadHistory())
     } finally {
       setDeleting(null)
     }

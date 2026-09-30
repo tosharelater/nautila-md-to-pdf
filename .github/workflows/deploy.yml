@@ -1,39 +1,47 @@
-name: Deploy to VPS
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
-  deploy:
-    name: SSH → clone/pull → docker compose up
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Deploy on VPS
-        uses: appleboy/ssh-action@v1.2.0
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
-          host:     ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
-          script: |
-            set -e
+          node-version: 20
+          cache: npm
 
-            # First deploy: clone via HTTPS token. Every deploy after: pull.
-            if [ ! -d "/opt/md-to-pdf/.git" ]; then
-              git clone https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Astrall-Digital/md-to-pdf.git /opt/md-to-pdf
-            fi
+      - name: Install
+        run: npm ci
 
-            cd /opt/md-to-pdf
-            # Match GitHub exactly (avoids "divergent branches" on git pull with newer Git)
-            git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Astrall-Digital/md-to-pdf.git
-            git fetch origin main
-            git checkout main
-            git reset --hard origin/main
+      - name: Build static site
+        run: npm run build
 
-            # Write the app secret (single quotes prevent bash from expanding $ chars)
-            echo 'ACCESS_KEY=${{ secrets.ACCESS_KEY }}' > .env
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
 
-            # Build and start
-            docker-compose up -d --build
-            docker image prune -f
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

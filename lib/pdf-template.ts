@@ -22,13 +22,9 @@ function logoHtml(src: string | null | undefined, variant: 'white' | 'dark', siz
   const shell = variant === 'white' ? MINT : GREEN
   const dot = variant === 'white' ? MINT : SAGE
 
-  if (src) {
-    /* Dark variant: invert light logos; white variant: use as-is on deep ink */
-    const filter =
-      variant === 'dark'
-        ? 'filter:brightness(0) saturate(100%);'
-        : ''
-    return `<img src="${src}" alt="Nautila" style="height:${sizePx}px;max-width:400px;object-fit:contain;display:block;${filter}" />`
+    if (src) {
+    /* Prefer serving the SVG as-is on both variants */
+    return `<img src="${src}" alt="Nautila" style="height:${sizePx}px;max-width:400px;object-fit:contain;display:block;" />`
   }
 
   const shellPath =

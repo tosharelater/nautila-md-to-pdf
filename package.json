@@ -1,18 +1,16 @@
 {
-  "name": "md-to-pdf",
-  "version": "0.1.0",
+  "name": "nautila-md-to-pdf",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "npx serve out",
     "lint": "next lint"
   },
   "dependencies": {
     "marked": "^12.0.0",
     "next": "^15.3.0",
-    "pdf-lib": "^1.17.1",
-    "puppeteer": "^24.15.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-markdown": "^9.0.1",

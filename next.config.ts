@@ -1,15 +1,16 @@
 import type { NextConfig } from 'next'
 
-const nextConfig: NextConfig = {
-  // Produces a self-contained build for Docker (server.js + minimal node_modules)
-  output: 'standalone',
+const basePath = '/nautila-md-to-pdf'
 
-  experimental: {
-    // Work around a Next.js 15 dev-mode manifest bug on Windows.
-    devtoolSegmentExplorer: false,
+const nextConfig: NextConfig = {
+  output: 'export',
+  basePath,
+  assetPrefix: basePath,
+  trailingSlash: true,
+  images: { unoptimized: true },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
   },
-  // Puppeteer needs to run only on the server; exclude it from the client bundle
-  serverExternalPackages: ['puppeteer'],
 }
 
 export default nextConfig

@@ -1,36 +1,39 @@
 # Nautila — MD to PDF
 
-Markdown → branded PDF converter for **Nautila** (cover, content, closing page).
+Static Markdown → branded PDF tool for **Nautila**.  
+Runs entirely in the browser and deploys on **GitHub Pages** (free).
 
-## Why not GitHub Pages?
+**Live:** https://tosharelater.github.io/nautila-md-to-pdf/
 
-GitHub Pages is **free** for public repos, but it only hosts **static** files.  
-This app needs a **Node.js server** and **Chromium/Puppeteer** to build PDFs, so Pages cannot run it.
+## How PDF export works
 
-| Host | Free? | Fits this app? |
-|------|-------|----------------|
-| GitHub Pages | Yes (public) | No — static only |
-| This GitHub repo | Yes (public) | Yes — source + Docker |
-| VPS / Docker | Depends on provider | Yes — recommended |
+GitHub Pages cannot run Puppeteer/servers. Export opens a print window — choose **Save as PDF** in the browser dialog. Cover, content, and closing pages use the Nautila brand template.
 
-## Run locally
+## Local development
 
 ```bash
-cp .env.example .env.local   # or create ACCESS_KEY=your-secret
 npm install
 npm run dev
 ```
 
-Open http://localhost:3000 — login with `ACCESS_KEY`.
-
-## Deploy (Docker)
+Open http://localhost:3000/nautila-md-to-pdf/  
+(base path matches GitHub Pages)
 
 ```bash
-docker compose up -d --build
+npm run build   # outputs static site to /out
 ```
 
-Set `ACCESS_KEY` in the environment (never commit secrets).
+## Deploy
+
+Push to `main` — GitHub Actions builds and publishes Pages automatically.
+
+Repo settings → Pages → Source: **GitHub Actions**.
+
+## Optional access gate
+
+Set `NEXT_PUBLIC_ACCESS_KEY` in the Actions build env if you want a soft client-side login.  
+Leave unset for a fully public editor (default).
 
 ## Stack
 
-Next.js 15 · Puppeteer · Tailwind · Nautila brand (green / shell logo)
+Next.js 15 (static export) · marked · react-markdown · Nautila brand
