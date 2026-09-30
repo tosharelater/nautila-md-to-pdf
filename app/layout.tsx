@@ -4,6 +4,9 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'MD to PDF | Nautila',
   description: 'Convert Markdown to beautifully styled PDFs — Nautila',
+  icons: {
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+  },
 }
 
 export default function RootLayout({
