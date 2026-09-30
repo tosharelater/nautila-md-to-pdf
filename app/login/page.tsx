@@ -57,7 +57,7 @@ export default function LoginPage() {
                 <svg width="22" height="18" viewBox="-20 -2 80 60" fill="none" aria-hidden="true">
                   <path
                     d={SHELL}
-                    stroke="#a1cca5"
+                    stroke="#63A6A0"
                     strokeWidth="5.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"

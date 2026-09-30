@@ -5,11 +5,11 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import type { MetaField } from '@/lib/types'
 
-const INK = '#16281c'
-const GREEN = '#415d43'
-const SAGE = '#709775'
-const MINT = '#a1cca5'
-const PAPER = '#fafaf7'
+const INK = '#14333B'
+const GREEN = '#2E7D8C'
+const SAGE = '#2E7D8C'
+const MINT = '#63A6A0'
+const PAPER = '#F2EFE6'
 const SHELL =
   'M42 6 A36 36 0 0 1 6 42 A22.25 22.25 0 0 1 -16.25 19.75 A13.75 13.75 0 0 1 -2.5 6 A8.5 8.5 0 0 1 6 14.5 A5.25 5.25 0 0 1 0.75 19.75'
 
@@ -32,7 +32,7 @@ function LogoWhite() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
       <ShellMark color={MINT} size={42} />
-      <span style={{ fontWeight: 700, fontSize: '18pt', color: '#f2f6f1', letterSpacing: '-0.02em', lineHeight: 1 }}>
+      <span style={{ fontWeight: 700, fontSize: '18pt', color: '#F2EFE6', letterSpacing: '-0.02em', lineHeight: 1 }}>
         Nautila<span style={{ color: MINT }}>.</span>
       </span>
     </div>
@@ -43,7 +43,7 @@ function LogoDark() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
       <ShellMark color={GREEN} size={36} />
-      <span style={{ fontWeight: 700, fontSize: '15pt', color: '#12211a', letterSpacing: '-0.02em', lineHeight: 1 }}>
+      <span style={{ fontWeight: 700, fontSize: '15pt', color: '#14333B', letterSpacing: '-0.02em', lineHeight: 1 }}>
         Nautila<span style={{ color: SAGE }}>.</span>
       </span>
     </div>
@@ -60,7 +60,7 @@ function ContactItems() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
       {items.map((item) => (
-        <div key={item.text} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '8.5pt', color: '#3c5045' }}>
+        <div key={item.text} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '8.5pt', color: '#556f75' }}>
           <span style={{ color: SAGE, width: '14px', textAlign: 'center', flexShrink: 0 }}>{item.icon}</span>
           <span>{item.text}</span>
         </div>
@@ -143,7 +143,7 @@ function CoverPage({
       style={{
         width: '210mm',
         minHeight: '297mm',
-        background: `linear-gradient(165deg, #12211a 0%, ${INK} 45%, #1d3524 100%)`,
+        background: `linear-gradient(165deg, #0f2a30 0%, ${INK} 50%, #1a4048 100%)`,
         display: 'flex',
         flexDirection: 'column',
         fontFamily: "'Inter', Arial, sans-serif",
@@ -158,7 +158,7 @@ function CoverPage({
           style={{
             fontSize: '34pt',
             fontWeight: 800,
-            color: '#f6faf6',
+            color: '#F2EFE6',
             lineHeight: 1.05,
             textTransform: 'uppercase',
             letterSpacing: '-0.02em',
@@ -175,7 +175,7 @@ function CoverPage({
               style={{
                 fontSize: '18pt',
                 fontWeight: 800,
-                color: '#f6faf6',
+                color: '#F2EFE6',
                 textTransform: 'uppercase',
                 letterSpacing: '-0.01em',
               }}
@@ -201,7 +201,7 @@ function CoverPage({
                 <span style={{ fontWeight: 700, color: MINT, fontSize: '10.5pt', minWidth: '110px', flexShrink: 0 }}>
                   {f.label}
                 </span>
-                <span style={{ color: '#f2f6f1', fontSize: '10.5pt' }}>{f.value}</span>
+                <span style={{ color: '#F2EFE6', fontSize: '10.5pt' }}>{f.value}</span>
               </div>
             ))}
           </div>
@@ -255,7 +255,7 @@ function EndPage() {
       style={{
         width: '210mm',
         minHeight: '297mm',
-        background: `linear-gradient(165deg, #12211a 0%, ${INK} 45%, #1d3524 100%)`,
+        background: `linear-gradient(165deg, #0f2a30 0%, ${INK} 50%, #1a4048 100%)`,
         display: 'flex',
         flexDirection: 'column',
         fontFamily: "'Inter', Arial, sans-serif",
@@ -274,13 +274,13 @@ function EndPage() {
           padding: '0 16mm 8mm',
         }}
       >
-        <div style={{ fontSize: '50pt', fontWeight: 300, color: '#f6faf6', lineHeight: 1, textAlign: 'right' }}>
+        <div style={{ fontSize: '50pt', fontWeight: 300, color: '#F2EFE6', lineHeight: 1, textAlign: 'right' }}>
           Merci
         </div>
         <div style={{ backgroundColor: SAGE, display: 'block', width: '100%', textAlign: 'right', padding: '5px 0' }}>
-          <span style={{ fontSize: '34pt', fontWeight: 800, color: '#f6faf6', lineHeight: 1.15 }}>Pour Votre</span>
+          <span style={{ fontSize: '34pt', fontWeight: 800, color: '#F2EFE6', lineHeight: 1.15 }}>Pour Votre</span>
         </div>
-        <div style={{ fontSize: '44pt', fontWeight: 800, color: '#f6faf6', lineHeight: 1.1, textAlign: 'right' }}>
+        <div style={{ fontSize: '44pt', fontWeight: 800, color: '#F2EFE6', lineHeight: 1.1, textAlign: 'right' }}>
           Attention
         </div>
         <div
@@ -325,7 +325,7 @@ function PageLabel({ children }: { children: React.ReactNode }) {
       <span
         style={{
           fontSize: '8.5pt',
-          color: '#5f7268',
+          color: '#556f75',
           letterSpacing: '0.08em',
           fontWeight: 500,
           textTransform: 'uppercase',
@@ -347,7 +347,7 @@ export default function PreviewPanel({ markdown, title, subtitle, meta }: Previe
   }, [markdown])
 
   return (
-    <div style={{ flex: 1, overflowY: 'auto', padding: '20px 12px', backgroundColor: '#e9ede7' }}>
+    <div style={{ flex: 1, overflowY: 'auto', padding: '20px 12px', backgroundColor: '#E8E4D6' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         <PageLabel>Couverture</PageLabel>
         <CoverPage title={title} subtitle={subtitle} meta={meta} />
