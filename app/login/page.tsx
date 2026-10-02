@@ -29,7 +29,7 @@ export default function LoginPage() {
     setLoading(true)
     try {
       if (required && key !== required) {
-        setError('Invalid key. Please try again.')
+        setError('Wrong password. Please try again.')
         return
       }
       sessionStorage.setItem(GATE_KEY, '1')
@@ -73,11 +73,11 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="px-8 py-8">
             <h1 className="text-dark-text font-semibold text-xl mb-1">Welcome</h1>
-            <p className="text-gray-500 text-sm mb-6">Enter your access key to continue.</p>
+            <p className="text-gray-500 text-sm mb-6">Enter the password to open the editor.</p>
 
             <div className="mb-5">
               <label htmlFor="access-key" className="block text-sm font-medium text-gray-700 mb-1.5">
-                Access Key
+                Password
               </label>
               <input
                 id="access-key"
@@ -87,7 +87,7 @@ export default function LoginPage() {
                   setKey(e.target.value)
                   setError('')
                 }}
-                placeholder="Enter access key"
+                placeholder="Enter password"
                 autoComplete="current-password"
                 required
                 className={`w-full px-4 py-2.5 border rounded-lg text-sm outline-none transition-colors
