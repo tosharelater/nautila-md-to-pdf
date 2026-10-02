@@ -1,5 +1,3 @@
-import { redirect } from 'next/navigation'
+'use client'
 
-export default function Home() {
-  redirect('/login')
-}
+export { default } from '../login/page'

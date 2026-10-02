@@ -33,7 +33,7 @@ export default function LoginPage() {
         return
       }
       sessionStorage.setItem(GATE_KEY, '1')
-      router.push('/editor/')
+      router.replace('/editor/')
     } finally {
       setLoading(false)
     }
