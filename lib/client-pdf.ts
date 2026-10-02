@@ -1,7 +1,7 @@
 /**
- * Client-side PDF export for GitHub Pages (no Puppeteer / no server).
- * Layout mirrors the original 3-PDF merge:
- *   cover (full bleed) → content (repeating header/footer) → end (full bleed)
+ * Client-side PDF export for GitHub Pages.
+ * Recreates the original Puppeteer 3-PDF merge as closely as the browser allows:
+ *   cover (margin 0) → content (24mm header + 30px footer) → end (margin 0)
  */
 import { marked } from 'marked'
 import {
@@ -24,13 +24,6 @@ function basePath(): string {
   return process.env.NEXT_PUBLIC_BASE_PATH || ''
 }
 
-function logoUrl(): string {
-  if (typeof window !== 'undefined') {
-    return `${window.location.origin}${basePath()}/logo.svg`
-  }
-  return `${basePath()}/logo.svg`
-}
-
 function bodyOf(html: string): string {
   const m = html.match(/<body[^>]*>([\s\S]*)<\/body>/i)
   return m ? m[1] : html
@@ -41,14 +34,29 @@ function styleOf(html: string): string {
   return m ? m[1] : ''
 }
 
-/** Build one printable HTML document matching the original Puppeteer layout. */
+/** Embed logo as data-URL so print never depends on network (same as old getLogoDataUrl). */
+async function logoDataUrl(): Promise<string | null> {
+  try {
+    const url = `${window.location.origin}${basePath()}/logo.svg`
+    const res = await fetch(url)
+    if (!res.ok) return null
+    const text = await res.text()
+    return `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(text)))}`
+  } catch {
+    return null
+  }
+}
+
+/** Build one printable HTML document matching the original pulled layout. */
 export async function buildPrintableHtml(input: ExportInput): Promise<string> {
   const rawHtml = await marked.parse(input.markdown, { gfm: true, breaks: false })
   const documentTitle = input.title?.trim() || 'Document'
+  const logoSrc = await logoDataUrl()
+
   const opts = {
     title: documentTitle,
     subtitle: input.subtitle?.trim() || '',
-    logoSrc: logoUrl(),
+    logoSrc,
     meta: input.meta,
   }
 
@@ -56,34 +64,39 @@ export async function buildPrintableHtml(input: ExportInput): Promise<string> {
   const content = getContentTemplate(rawHtml, opts)
   const end = getEndTemplate(opts)
 
-  /*
-   * Content chrome uses a table thead/tfoot so the header & footer repeat on
-   * content pages only (Chrome-friendly). Cover/end stay outside that table —
-   * same structure as the old cover PDF + content PDF + end PDF merge.
-   */
+  /* Pull only the markdown body (strip the outer padding wrapper — we control pad here). */
+  let contentInner = bodyOf(content)
+  const padWrap = contentInner.match(/^<div style="padding:0 60px;">([\s\S]*)<\/div>$/)
+  if (padWrap) contentInner = padWrap[1]
+
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <title>${documentTitle.replace(/</g, '')}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
+    /* ---- from original templates (cover / content / end) ---- */
     ${styleOf(cover)}
     ${styleOf(content)}
     ${styleOf(end)}
 
+    /* ---- print shell: recreate Puppeteer page.pdf options ---- */
     @page { size: A4; margin: 0; }
     html, body {
       margin: 0 !important;
       padding: 0 !important;
+      width: 210mm;
       background: #fff !important;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
 
     .page-cover,
     .page-end {
+      width: 210mm;
       page-break-after: always;
       break-after: page;
       page-break-inside: avoid;
@@ -91,52 +104,63 @@ export async function buildPrintableHtml(input: ExportInput): Promise<string> {
     }
     .page-cover .cover,
     .page-end .end {
-      width: 210mm;
-      height: 297mm;
-      max-height: 297mm;
-      overflow: hidden;
-      box-sizing: border-box;
+      width: 210mm !important;
+      height: 297mm !important;
+      max-height: 297mm !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
 
-    /* Content block — header/footer via table groups (Puppeteer displayHeaderFooter equivalent) */
+    /*
+     * Content pages — table thead/tfoot = Puppeteer displayHeaderFooter
+     * Puppeteer margins were: top 25mm, bottom 10mm, left/right 0
+     * Content HTML itself used padding: 0 60px
+     */
     .content-table {
-      width: 100%;
+      width: 210mm;
       border-collapse: collapse;
+      table-layout: fixed;
       page-break-after: always;
       break-after: page;
+      background: #fafaf7;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
     .content-table thead { display: table-header-group; }
     .content-table tfoot { display: table-footer-group; }
     .content-table thead td,
     .content-table tfoot td,
     .content-table tbody td {
-      padding: 0;
-      margin: 0;
-      border: 0;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: 0 !important;
       vertical-align: top;
     }
-    /* Match Puppeteer content margins: top ~25mm (header), bottom ~10mm (footer), sides via inner pad */
     .content-table tbody td {
-      background: #F2EFE6;
+      background: #fafaf7;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
-    .content-table .md-pad {
-      /* Horizontal pad already on content template (60px); vertical clears header/footer */
-      padding: 2mm 0 2mm;
+    .content-table .md-body {
+      padding: 8px 60px 12px;
       box-sizing: border-box;
+      background: #fafaf7;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    /* first content heading shouldn't leave a huge gap under the header */
+    .content-table .md-body > h1:first-child,
+    .content-table .md-body > h2:first-child {
+      margin-top: 8px;
     }
 
     @media print {
-      .no-print { display: none !important; }
+      html, body { width: 210mm; }
       * {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
-      }
-      .page-cover .cover,
-      .page-end .end {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
       }
     }
   </style>
@@ -152,7 +176,7 @@ export async function buildPrintableHtml(input: ExportInput): Promise<string> {
       <tr><td>${getPrintContentFooter()}</td></tr>
     </tfoot>
     <tbody>
-      <tr><td><div class="md-pad">${bodyOf(content)}</div></td></tr>
+      <tr><td><div class="md-body">${contentInner}</div></td></tr>
     </tbody>
   </table>
 
@@ -162,8 +186,8 @@ export async function buildPrintableHtml(input: ExportInput): Promise<string> {
 }
 
 /**
- * Prints via a hidden same-origin iframe (no window.open → no popup blocker).
- * User picks “Save as PDF” in the browser print dialog.
+ * Prints via a same-origin iframe (no popup). Closest static stand-in for Puppeteer.
+ * In the print dialog: Margins = None, and enable Background graphics.
  */
 export async function exportPdfViaPrint(input: ExportInput): Promise<void> {
   const html = await buildPrintableHtml(input)
@@ -195,26 +219,25 @@ export async function exportPdfViaPrint(input: ExportInput): Promise<void> {
   doc.write(html)
   doc.close()
 
+  /* Wait for fonts + images (logo data-URL + Google Fonts) like Puppeteer networkidle */
   await new Promise<void>((resolve) => {
     const finish = () => resolve()
+    const waitFonts = doc.fonts?.ready?.then(() => undefined).catch(() => undefined) ?? Promise.resolve()
     const imgs = Array.from(doc.images || [])
-    if (!imgs.length) {
-      setTimeout(finish, 450)
-      return
-    }
-    let pending = imgs.length
-    const tick = () => {
-      pending -= 1
-      if (pending <= 0) setTimeout(finish, 200)
-    }
-    imgs.forEach((img) => {
-      if (img.complete) tick()
-      else {
-        img.addEventListener('load', tick)
-        img.addEventListener('error', tick)
-      }
-    })
-    setTimeout(finish, 2500)
+    const waitImgs = Promise.all(
+      imgs.map(
+        (img) =>
+          new Promise<void>((r) => {
+            if (img.complete) r()
+            else {
+              img.addEventListener('load', () => r())
+              img.addEventListener('error', () => r())
+            }
+          })
+      )
+    )
+    Promise.all([waitFonts, waitImgs]).then(() => setTimeout(finish, 300))
+    setTimeout(finish, 3000)
   })
 
   const cleanup = () => {

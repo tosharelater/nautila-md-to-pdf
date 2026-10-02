@@ -5,11 +5,11 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import type { MetaField } from '@/lib/types'
 
-const INK = '#14333B'
-const GREEN = '#14333B'
-const SAGE = '#2E7D8C'
-const MINT = '#63A6A0'
-const PAPER = '#F2EFE6'
+const INK = '#16281c'
+const GREEN = '#415d43'
+const SAGE = '#709775'
+const MINT = '#a1cca5'
+const PAPER = '#fafaf7'
 const SHELL =
   'M42 6 A36 36 0 0 1 6 42 A22.25 22.25 0 0 1 -16.25 19.75 A13.75 13.75 0 0 1 -2.5 6 A8.5 8.5 0 0 1 6 14.5 A5.25 5.25 0 0 1 0.75 19.75'
 
@@ -32,7 +32,7 @@ function LogoWhite() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
       <ShellMark color={MINT} size={42} />
-      <span style={{ fontWeight: 700, fontSize: '18pt', color: '#F6FAF6', letterSpacing: '-0.02em', lineHeight: 1 }}>
+      <span style={{ fontWeight: 700, fontSize: '18pt', color: '#f2f6f1', letterSpacing: '-0.02em', lineHeight: 1 }}>
         Nautila<span style={{ color: MINT }}>.</span>
       </span>
     </div>
@@ -43,7 +43,7 @@ function LogoDark() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
       <ShellMark color={GREEN} size={36} />
-      <span style={{ fontWeight: 700, fontSize: '15pt', color: '#14333B', letterSpacing: '-0.02em', lineHeight: 1 }}>
+      <span style={{ fontWeight: 700, fontSize: '15pt', color: '#12211a', letterSpacing: '-0.02em', lineHeight: 1 }}>
         Nautila<span style={{ color: SAGE }}>.</span>
       </span>
     </div>
@@ -60,7 +60,7 @@ function ContactItems() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
       {items.map((item) => (
-        <div key={item.text} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '8.5pt', color: '#556f75' }}>
+        <div key={item.text} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '8.5pt', color: '#3c5045' }}>
           <span style={{ color: SAGE, width: '14px', textAlign: 'center', flexShrink: 0 }}>{item.icon}</span>
           <span>{item.text}</span>
         </div>
@@ -74,24 +74,29 @@ function PageHeader({ title }: { title: string }) {
     <div
       style={{
         backgroundColor: GREEN,
-        height: '24mm',
-        padding: '0 16mm 4mm',
+        height: '14mm',
+        padding: '0 16mm',
         display: 'flex',
-        alignItems: 'flex-end',
+        alignItems: 'center',
         justifyContent: 'space-between',
         flexShrink: 0,
-        boxSizing: 'border-box',
       }}
     >
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <ShellMark color={MINT} size={22} />
+        <span style={{ color: '#fff', fontSize: '8pt', fontWeight: 700, letterSpacing: '0.04em' }}>
+          Nautila
+        </span>
+      </div>
       <span
         style={{
-          color: '#F6FAF6',
-          fontSize: '9pt',
-          fontWeight: 600,
+          color: 'rgba(242,246,241,0.65)',
+          fontSize: '7.5pt',
+          fontStyle: 'italic',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
-          maxWidth: '100%',
+          maxWidth: '55%',
         }}
       >
         {title || 'Document'}
@@ -102,27 +107,21 @@ function PageHeader({ title }: { title: string }) {
 
 function PageFooter() {
   return (
-    <div
-      style={{
-        flexShrink: 0,
-        height: '30px',
-        backgroundColor: SAGE,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <span
+    <div style={{ flexShrink: 0 }}>
+      <div style={{ height: '5px', background: `linear-gradient(90deg, ${GREEN}, ${MINT})` }} />
+      <div
         style={{
-          color: '#F6FAF6',
-          fontSize: '10px',
-          letterSpacing: '0.5px',
-          fontFamily: "'Helvetica Neue', Arial, sans-serif",
-          lineHeight: '30px',
+          height: '13mm',
+          backgroundColor: INK,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        Nautila — Document confidentiel
-      </span>
+        <span style={{ color: '#fff', fontSize: '7.5pt', letterSpacing: '0.07em' }}>
+          Nautila &nbsp;&nbsp;|&nbsp;&nbsp; Confidentiel
+        </span>
+      </div>
     </div>
   )
 }
@@ -144,7 +143,7 @@ function CoverPage({
       style={{
         width: '210mm',
         minHeight: '297mm',
-        background: `linear-gradient(165deg, #0f2a30 0%, ${INK} 45%, #1a4048 100%)`,
+        background: `linear-gradient(165deg, #12211a 0%, ${INK} 45%, #1d3524 100%)`,
         display: 'flex',
         flexDirection: 'column',
         fontFamily: "'Inter', Arial, sans-serif",
@@ -159,7 +158,7 @@ function CoverPage({
           style={{
             fontSize: '34pt',
             fontWeight: 800,
-            color: '#F6FAF6',
+            color: '#f6faf6',
             lineHeight: 1.05,
             textTransform: 'uppercase',
             letterSpacing: '-0.02em',
@@ -176,7 +175,7 @@ function CoverPage({
               style={{
                 fontSize: '18pt',
                 fontWeight: 800,
-                color: '#F6FAF6',
+                color: '#f6faf6',
                 textTransform: 'uppercase',
                 letterSpacing: '-0.01em',
               }}
@@ -202,7 +201,7 @@ function CoverPage({
                 <span style={{ fontWeight: 700, color: MINT, fontSize: '10.5pt', minWidth: '110px', flexShrink: 0 }}>
                   {f.label}
                 </span>
-                <span style={{ color: '#F6FAF6', fontSize: '10.5pt' }}>{f.value}</span>
+                <span style={{ color: '#f2f6f1', fontSize: '10.5pt' }}>{f.value}</span>
               </div>
             ))}
           </div>
@@ -256,7 +255,7 @@ function EndPage() {
       style={{
         width: '210mm',
         minHeight: '297mm',
-        background: `linear-gradient(165deg, #0f2a30 0%, ${INK} 45%, #1a4048 100%)`,
+        background: `linear-gradient(165deg, #12211a 0%, ${INK} 45%, #1d3524 100%)`,
         display: 'flex',
         flexDirection: 'column',
         fontFamily: "'Inter', Arial, sans-serif",
@@ -275,13 +274,13 @@ function EndPage() {
           padding: '0 16mm 8mm',
         }}
       >
-        <div style={{ fontSize: '50pt', fontWeight: 300, color: '#F6FAF6', lineHeight: 1, textAlign: 'right' }}>
+        <div style={{ fontSize: '50pt', fontWeight: 300, color: '#f6faf6', lineHeight: 1, textAlign: 'right' }}>
           Merci
         </div>
         <div style={{ backgroundColor: SAGE, display: 'block', width: '100%', textAlign: 'right', padding: '5px 0' }}>
-          <span style={{ fontSize: '34pt', fontWeight: 800, color: '#F6FAF6', lineHeight: 1.15 }}>Pour Votre</span>
+          <span style={{ fontSize: '34pt', fontWeight: 800, color: '#f6faf6', lineHeight: 1.15 }}>Pour Votre</span>
         </div>
-        <div style={{ fontSize: '44pt', fontWeight: 800, color: '#F6FAF6', lineHeight: 1.1, textAlign: 'right' }}>
+        <div style={{ fontSize: '44pt', fontWeight: 800, color: '#f6faf6', lineHeight: 1.1, textAlign: 'right' }}>
           Attention
         </div>
         <div

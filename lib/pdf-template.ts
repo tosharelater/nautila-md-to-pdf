@@ -1,37 +1,33 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    PDF Template — Nautila brand
-   Layout copied from original 3-PDF merge templates.
-   Palette Atlantique (solid / opaque — no washed alphas):
-     ink #14333B · teal #2E7D8C · écume #63A6A0 · paper #F2EFE6 · cream #F6FAF6
+   Palette: deep ink #16281c · green #415d43 · sage #709775 · mint #a1cca5
+   Three separate HTML generators for 3-PDF merge approach.
    ───────────────────────────────────────────────────────────────────────────── */
 
 export type { MetaField, TemplateOptions } from './types'
 import type { MetaField, TemplateOptions } from './types'
 
-const INK = '#14333B'
-const GREEN = '#14333B' /* deep chrome — page header / strong titles */
-const SAGE = '#2E7D8C' /* mid teal — subtitle bars / footer */
-const MINT = '#63A6A0' /* light accent */
-const PAPER = '#F2EFE6'
-const SURFACE = '#E8E4D6'
-const TEXT = '#14333B'
-const MUTED = '#556f75'
-const CREAM = '#F6FAF6' /* near-white on dark — fully opaque */
-
-const PRINT = '-webkit-print-color-adjust:exact;print-color-adjust:exact;'
+const INK = '#16281c'
+const GREEN = '#415d43'
+const SAGE = '#709775'
+const MINT = '#a1cca5'
+const PAPER = '#fafaf7'
+const SURFACE = '#f2f4f0'
+const TEXT = '#12211a'
+const MUTED = '#3c5045'
 
 // ── CSS logo fallback (shell + wordmark) ─────────────────────────────────────
 function logoHtml(src: string | null | undefined, variant: 'white' | 'dark', sizePx = 46): string {
-  const textColor = variant === 'white' ? CREAM : TEXT
-  const shell = variant === 'white' ? MINT : SAGE
+  const textColor = variant === 'white' ? '#f2f6f1' : TEXT
+  const shell = variant === 'white' ? MINT : GREEN
   const dot = variant === 'white' ? MINT : SAGE
 
   if (src) {
-    /* Dark surfaces: light logo as-is. Light surfaces: darken for contrast. */
+    /* Dark variant: invert light logos; white variant: use as-is on deep ink */
     const filter =
       variant === 'dark'
-        ? 'filter:brightness(0) saturate(100%);opacity:1;'
-        : 'opacity:1;'
+        ? 'filter:brightness(0) saturate(100%);'
+        : ''
     return `<img src="${src}" alt="Nautila" style="height:${sizePx}px;max-width:400px;object-fit:contain;display:block;${filter}" />`
   }
 
@@ -76,7 +72,8 @@ const BASE_STYLE = `
     color: ${TEXT};
     background: transparent;
     width: 100%;
-    ${PRINT}
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
   @page { size: A4; }
 `
@@ -109,7 +106,7 @@ export function getCoverTemplate(opts: TemplateOptions = {}): string {
       (f) => `
         <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:7px;">
           <span style="font-weight:700;color:${MINT};font-size:10.5pt;min-width:110px;flex-shrink:0;">${escapeHtml(f.label)}</span>
-          <span style="color:${CREAM};font-size:10.5pt;">${escapeHtml(f.value)}</span>
+          <span style="color:#f2f6f1;font-size:10.5pt;">${escapeHtml(f.value)}</span>
         </div>`
     )
     .join('')
@@ -120,10 +117,10 @@ export function getCoverTemplate(opts: TemplateOptions = {}): string {
     body { background-color: ${INK}; }
     .cover {
       width: 210mm; height: 297mm;
-      background: linear-gradient(165deg, #0f2a30 0%, ${INK} 45%, #1a4048 100%);
+      background: linear-gradient(165deg, #12211a 0%, ${INK} 45%, #1d3524 100%);
       display: flex; flex-direction: column;
       overflow: hidden;
-      ${PRINT}
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
   `
 
@@ -134,26 +131,26 @@ export function getCoverTemplate(opts: TemplateOptions = {}): string {
     </div>
 
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 16mm;">
-      <div style="font-size:36pt;font-weight:800;color:${CREAM};line-height:1.05;text-transform:uppercase;letter-spacing:-0.02em;margin-bottom:10px;word-break:break-word;">
+      <div style="font-size:36pt;font-weight:800;color:#f6faf6;line-height:1.05;text-transform:uppercase;letter-spacing:-0.02em;margin-bottom:10px;word-break:break-word;">
         ${safeTitleUp}
       </div>
 
       ${
         safeSubtitle
-          ? `<div style="background-color:${SAGE};padding:7px 6mm;margin-bottom:22px;${PRINT}">
-               <span style="font-size:18pt;font-weight:800;color:${CREAM};text-transform:uppercase;letter-spacing:-0.01em;">${safeSubtitle}</span>
+          ? `<div style="background-color:${SAGE};padding:7px 6mm;margin-bottom:22px;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+               <span style="font-size:18pt;font-weight:800;color:#f6faf6;text-transform:uppercase;letter-spacing:-0.01em;">${safeSubtitle}</span>
              </div>`
-          : `<div style="width:100%;height:7px;background:linear-gradient(90deg,${SAGE},${MINT});margin-bottom:24px;${PRINT}"></div>`
+          : `<div style="width:100%;height:7px;background:linear-gradient(90deg,${GREEN},${MINT});margin-bottom:24px;-webkit-print-color-adjust:exact;print-color-adjust:exact;"></div>`
       }
 
       ${metaRows ? `<div style="display:flex;flex-direction:column;">${metaRows}</div>` : ''}
     </div>
 
-    <div style="background-color:${PAPER};padding:9mm 16mm 7mm;flex-shrink:0;${PRINT}">
-      <div style="font-size:14pt;font-weight:700;color:${SAGE};font-style:italic;margin-bottom:10px;">Contactez-nous :</div>
+    <div style="background-color:${PAPER};padding:9mm 16mm 7mm;flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+      <div style="font-size:14pt;font-weight:700;color:${GREEN};font-style:italic;margin-bottom:10px;">Contactez-nous :</div>
       ${CONTACT_ITEMS}
     </div>
-    <div style="height:8px;background:linear-gradient(90deg,${SAGE},${MINT});flex-shrink:0;${PRINT}"></div>
+    <div style="height:8px;background:linear-gradient(90deg,${GREEN},${MINT});flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;"></div>
   </div>`
 
   return htmlShell(style, body)
@@ -190,7 +187,7 @@ export function getContentTemplate(htmlContent: string, opts: TemplateOptions = 
     p { line-height: 1.7; color: ${MUTED}; margin-bottom: 12px; orphans: 3; widows: 3; }
     strong, b { font-weight: 700; color: ${TEXT}; }
     em, i { font-style: italic; color: ${MUTED}; }
-    a { color: ${SAGE}; text-decoration: underline; }
+    a { color: ${GREEN}; text-decoration: underline; }
 
     ul { list-style: none; padding-left: 20px; margin: 10px 0 12px; }
     ul li { position: relative; padding-left: 16px; margin-bottom: 6px; line-height: 1.65; color: ${MUTED}; orphans: 3; widows: 3; }
@@ -201,21 +198,20 @@ export function getContentTemplate(htmlContent: string, opts: TemplateOptions = 
     ol li::marker { color: ${SAGE}; font-weight: 700; }
 
     table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 10pt; }
-    thead tr { background-color: ${GREEN}; color: ${CREAM}; ${PRINT} }
+    thead tr { background-color: ${GREEN}; color: #ffffff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     thead th { padding: 9px 12px; text-align: left; font-weight: 600; letter-spacing: 0.02em; border: 1px solid ${GREEN}; }
-    tbody tr:nth-child(odd) { background-color: ${SURFACE}; ${PRINT} }
+    tbody tr:nth-child(odd) { background-color: ${SURFACE}; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     tbody tr:nth-child(even) { background-color: #ffffff; }
-    tbody td { padding: 8px 12px; border: 1px solid #d4cfc0; line-height: 1.5; color: ${MUTED}; vertical-align: top; }
+    tbody td { padding: 8px 12px; border: 1px solid #d5ddd6; line-height: 1.5; color: ${MUTED}; vertical-align: top; }
 
-    pre { background-color: ${SURFACE}; border-left: 4px solid ${SAGE}; padding: 14px 16px; margin: 14px 0 18px; border-radius: 0 4px 4px 0; overflow-x: auto; page-break-inside: avoid; ${PRINT} }
+    pre { background-color: ${SURFACE}; border-left: 4px solid ${SAGE}; padding: 14px 16px; margin: 14px 0 18px; border-radius: 0 4px 4px 0; overflow-x: auto; page-break-inside: avoid; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     pre code { font-family: 'Courier New', Courier, monospace; font-size: 9.5pt; color: ${TEXT}; background: none; padding: 0; line-height: 1.55; }
-    code { font-family: 'Courier New', Courier, monospace; font-size: 9.5pt; background-color: ${SURFACE}; padding: 2px 5px; border-radius: 3px; color: ${SAGE}; }
+    code { font-family: 'Courier New', Courier, monospace; font-size: 9.5pt; background-color: ${SURFACE}; padding: 2px 5px; border-radius: 3px; color: ${GREEN}; }
 
-    blockquote { border-left: 4px solid ${MINT}; margin: 14px 0; padding: 10px 16px; background-color: ${SURFACE}; border-radius: 0 4px 4px 0; ${PRINT} }
+    blockquote { border-left: 4px solid ${MINT}; margin: 14px 0; padding: 10px 16px; background-color: ${SURFACE}; border-radius: 0 4px 4px 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     blockquote p { color: ${MUTED}; font-style: italic; margin-bottom: 0; }
 
-    /* Solid muted rule — no opacity (prints washed otherwise) */
-    hr { border: none; border-top: 2px solid #a8c9c6; margin: 24px 0; }
+    hr { border: none; border-top: 2px solid ${SAGE}; margin: 24px 0; opacity: 0.45; }
     img { max-width: 100%; height: auto; border-radius: 4px; margin: 10px 0; }
     li { orphans: 3; widows: 3; }
   `
@@ -236,10 +232,10 @@ export function getEndTemplate(opts: TemplateOptions = {}): string {
     body { background-color: ${INK}; }
     .end {
       width: 210mm; height: 297mm;
-      background: linear-gradient(165deg, #0f2a30 0%, ${INK} 45%, #1a4048 100%);
+      background: linear-gradient(165deg, #12211a 0%, ${INK} 45%, #1d3524 100%);
       display: flex; flex-direction: column;
       overflow: hidden;
-      ${PRINT}
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
   `
 
@@ -250,28 +246,28 @@ export function getEndTemplate(opts: TemplateOptions = {}): string {
     </div>
 
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;padding:0 16mm 8mm;">
-      <div style="font-size:54pt;font-weight:300;color:${CREAM};line-height:1;text-align:right;">Merci</div>
-      <div style="background-color:${SAGE};display:block;width:100%;text-align:right;padding:5px 6mm;${PRINT}">
-        <span style="font-size:36pt;font-weight:800;color:${CREAM};line-height:1.15;">Pour Votre</span>
+      <div style="font-size:54pt;font-weight:300;color:#f6faf6;line-height:1;text-align:right;">Merci</div>
+      <div style="background-color:${SAGE};display:block;width:100%;text-align:right;padding:5px 6mm;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+        <span style="font-size:36pt;font-weight:800;color:#f6faf6;line-height:1.15;">Pour Votre</span>
       </div>
-      <div style="font-size:46pt;font-weight:800;color:${CREAM};line-height:1.1;text-align:right;">Attention</div>
-      <div style="width:80px;height:6px;background:linear-gradient(90deg,${SAGE},${MINT});margin-top:14px;align-self:flex-end;border-radius:2px;${PRINT}"></div>
+      <div style="font-size:46pt;font-weight:800;color:#f6faf6;line-height:1.1;text-align:right;">Attention</div>
+      <div style="width:80px;height:6px;background:linear-gradient(90deg,${GREEN},${MINT});margin-top:14px;align-self:flex-end;border-radius:2px;-webkit-print-color-adjust:exact;print-color-adjust:exact;"></div>
     </div>
 
-    <div style="background-color:${PAPER};padding:9mm 16mm 7mm;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;${PRINT}">
+    <div style="background-color:${PAPER};padding:9mm 16mm 7mm;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
       <div style="flex:1;">
-        <div style="font-size:14pt;font-weight:700;color:${SAGE};font-style:italic;margin-bottom:10px;">Contactez-nous :</div>
+        <div style="font-size:14pt;font-weight:700;color:${GREEN};font-style:italic;margin-bottom:10px;">Contactez-nous :</div>
         ${CONTACT_ITEMS}
       </div>
     </div>
-    <div style="height:8px;background:linear-gradient(90deg,${SAGE},${MINT});flex-shrink:0;${PRINT}"></div>
+    <div style="height:8px;background:linear-gradient(90deg,${GREEN},${MINT});flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;"></div>
   </div>`
 
   return htmlShell(style, body)
 }
 
 // ════════════════════════════════════════════════════════════════════════════
-//  HEADER TEMPLATE (Puppeteer displayHeaderFooter) — kept for reference
+//  HEADER TEMPLATE (Puppeteer displayHeaderFooter)
 // ════════════════════════════════════════════════════════════════════════════
 export function getHeaderTemplate(title: string): string {
   const safe = escapeHtml(title)
@@ -280,37 +276,41 @@ export function getHeaderTemplate(title: string): string {
     * { margin:0; padding:0; box-sizing:border-box; }
     html, body { margin:0 !important; padding:0 !important; width:100%; height:100%; }
   </style>
-  <div style="width:calc(100% + 10mm);margin-left:-5mm;margin-top:-10mm;height:24mm;box-sizing:border-box;background-color:${GREEN};display:flex;align-items:flex-end;justify-content:space-between;padding:0 21mm 4mm 21mm;font-family:'Inter',Arial,sans-serif;${PRINT}color:${CREAM};font-size:9pt;">
+  <div style="width:calc(100% + 10mm);margin-left:-5mm;margin-top:-10mm;height:24mm;box-sizing:border-box;background-color:${GREEN};display:flex;align-items:flex-end;justify-content:space-between;padding:0 21mm 4mm 21mm;font-family:'Inter',Arial,sans-serif;-webkit-print-color-adjust:exact;color:#f6faf6;font-size:9pt;">
     <span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70%;">${safe}</span>
     <span style="font-weight:700;"><span class="pageNumber"></span> / <span class="totalPages"></span></span>
   </div>`
 }
 
+// ════════════════════════════════════════════════════════════════════════════
+//  FOOTER TEMPLATE
+// ════════════════════════════════════════════════════════════════════════════
 export function getFooterTemplate(): string {
   return `<style>
     * { margin:0; padding:0; box-sizing:border-box; }
   html, body { margin:0 !important; padding:0 !important; width:100%; height:100%; display:flex; flex-direction:column; justify-content:flex-end; overflow:visible; }
   </style>
-<div style="width:100%;height:30px;background-color:${SAGE};display:flex;align-items:center;justify-content:center;transform:translateY(6mm);${PRINT}">
-  <span style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:10px;color:${CREAM};letter-spacing:0.5px;line-height:30px;">Nautila — Document confidentiel</span>
+<div style="width:100%;height:30px;background-color:${SAGE};display:flex;align-items:center;justify-content:center;transform:translateY(6mm);-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+  <span style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:10px;color:#fff;letter-spacing:0.5px;line-height:30px;">Nautila — Document confidentiel</span>
   </div>`
 }
 
-/** Browser-print header — same geometry as original Puppeteer header (24mm) */
+/** Browser-print stand-in for Puppeteer headerTemplate (same 24mm green bar). */
 export function getPrintContentHeader(title: string): string {
   const safe = escapeHtml(title)
-  return `<div style="width:100%;height:24mm;box-sizing:border-box;background-color:${GREEN};display:flex;align-items:flex-end;justify-content:space-between;padding:0 16mm 4mm 16mm;font-family:'Inter',Arial,sans-serif;${PRINT}color:${CREAM};font-size:9pt;">
-    <span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;">${safe}</span>
+  return `<div style="width:100%;height:24mm;box-sizing:border-box;background-color:${GREEN};display:flex;align-items:flex-end;justify-content:space-between;padding:0 16mm 4mm 16mm;font-family:'Inter',Arial,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact;color:#f6faf6;font-size:9pt;">
+    <span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70%;">${safe}</span>
   </div>`
 }
 
-/** Browser-print footer — same as original (30px sage bar) */
+/** Browser-print stand-in for Puppeteer footerTemplate (sage confidential bar). */
 export function getPrintContentFooter(): string {
-  return `<div style="width:100%;height:30px;box-sizing:border-box;background-color:${SAGE};display:flex;align-items:center;justify-content:center;${PRINT}">
-    <span style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:10px;color:${CREAM};letter-spacing:0.5px;line-height:30px;">Nautila — Document confidentiel</span>
+  return `<div style="width:100%;height:30px;box-sizing:border-box;background-color:${SAGE};display:flex;align-items:center;justify-content:center;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+    <span style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:10px;color:#fff;letter-spacing:0.5px;line-height:30px;">Nautila — Document confidentiel</span>
   </div>`
 }
 
+// ── Helpers ──────────────────────────────────────────────────────────────────
 function escapeHtml(str: string): string {
   return str
     .replace(/&/g, '&amp;')

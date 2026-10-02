@@ -9,25 +9,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        /* Nautila Palette Atlantique */
-        ink: '#14333B',
+        ink: '#16281c',
         green: {
-          DEFAULT: '#2E7D8C',
-          900: '#14333B',
-          600: '#2E7D8C',
-          400: '#63A6A0',
-          200: '#63A6A0',
+          DEFAULT: '#415d43',
+          900: '#415d43',
+          600: '#709775',
+          400: '#8fb996',
+          200: '#a1cca5',
         },
-        sage: '#2E7D8C',
-        mint: '#63A6A0',
-        paper: '#F2EFE6',
-        surface: '#E8E4D6',
-        /* legacy aliases kept for existing classNames */
-        navy: '#14333B',
-        gold: '#2E7D8C',
-        'steel-blue': '#63A6A0',
-        'off-white': '#F2EFE6',
-        'dark-text': '#14333B',
+        sage: '#709775',
+        mint: '#a1cca5',
+        paper: '#fafaf7',
+        surface: '#f2f4f0',
+        navy: '#415d43',
+        gold: '#709775',
+        'steel-blue': '#8fb996',
+        'off-white': '#fafaf7',
+        'dark-text': '#12211a',
       },
       fontFamily: {
         sans: ['Inter', 'Arial', 'sans-serif'],

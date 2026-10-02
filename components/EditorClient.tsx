@@ -141,7 +141,7 @@ export default function EditorClient() {
       const { exportPdfViaPrint, saveHistoryEntry } = await import('@/lib/client-pdf')
       await exportPdfViaPrint({ markdown, title, subtitle, meta })
       saveHistoryEntry({ markdown, title, subtitle, meta })
-      showToast('success', 'Print dialog opened — choose “Save as PDF”.')
+      showToast('success', 'Print dialog: Margins = None, enable Background graphics, then Save as PDF.')
     } catch (err) {
       showToast('error', err instanceof Error ? err.message : 'Failed to export PDF.')
     } finally {
@@ -152,27 +152,27 @@ export default function EditorClient() {
   const metaEntries = Object.entries(meta) as [string, MetaField][]
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden" style={{ backgroundColor: '#E8E4D6' }}>
+    <div className="h-screen flex flex-col overflow-hidden" style={{ backgroundColor: '#f2f4f0' }}>
 
       {/* ── Navbar ─────────────────────────────────────────────────────── */}
       <header
         className="flex-shrink-0 flex items-center justify-between px-5 shadow-md z-20"
-        style={{ backgroundColor: '#14333B', height: '52px' }}
+        style={{ backgroundColor: '#16281c', height: '52px' }}
       >
         {/* Brand */}
         <div className="flex items-center gap-3">
           <div
             className="flex items-center justify-center rounded-full flex-shrink-0"
-            style={{ width: '28px', height: '28px', backgroundColor: 'rgba(99,166,160,0.2)', border: '1px solid rgba(99,166,160,0.35)' }}
+            style={{ width: '28px', height: '28px', backgroundColor: 'rgba(161,204,165,0.2)', border: '1px solid rgba(161,204,165,0.35)' }}
           >
             <svg width="16" height="14" viewBox="-20 -2 80 60" fill="none" aria-hidden="true">
-              <path d="M42 6 A36 36 0 0 1 6 42 A22.25 22.25 0 0 1 -16.25 19.75 A13.75 13.75 0 0 1 -2.5 6 A8.5 8.5 0 0 1 6 14.5 A5.25 5.25 0 0 1 0.75 19.75" stroke="#63A6A0" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M42 6 A36 36 0 0 1 6 42 A22.25 22.25 0 0 1 -16.25 19.75 A13.75 13.75 0 0 1 -2.5 6 A8.5 8.5 0 0 1 6 14.5 A5.25 5.25 0 0 1 0.75 19.75" stroke="#a1cca5" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
           <span className="font-bold text-white tracking-wide select-none" style={{ fontSize: '14px' }}>
             MD to PDF
           </span>
-          <span className="hidden sm:block text-xs" style={{ color: '#63A6A0' }}>by Nautila</span>
+          <span className="hidden sm:block text-xs" style={{ color: '#8fb996' }}>by Nautila</span>
         </div>
 
         {/* Right side: history + settings toggle + export */}
@@ -182,10 +182,10 @@ export default function EditorClient() {
             onClick={() => setHistoryOpen(v => !v)}
             className="flex items-center gap-1.5 text-xs font-medium rounded px-3 py-1.5 transition-colors"
             style={{
-              color: historyOpen ? '#14333B' : '#b7d4d1',
-              backgroundColor: historyOpen ? '#63A6A0' : 'rgba(255,255,255,0.08)',
+              color: historyOpen ? '#16281c' : '#c5dcc8',
+              backgroundColor: historyOpen ? '#a1cca5' : 'rgba(255,255,255,0.08)',
               border: '1px solid',
-              borderColor: historyOpen ? '#63A6A0' : 'rgba(255,255,255,0.15)',
+              borderColor: historyOpen ? '#a1cca5' : 'rgba(255,255,255,0.15)',
             }}
           >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -199,10 +199,10 @@ export default function EditorClient() {
             onClick={() => setSettingsOpen(v => !v)}
             className="flex items-center gap-1.5 text-xs font-medium rounded px-3 py-1.5 transition-colors"
             style={{
-              color: settingsOpen ? '#14333B' : '#b7d4d1',
-              backgroundColor: settingsOpen ? '#63A6A0' : 'rgba(255,255,255,0.08)',
+              color: settingsOpen ? '#16281c' : '#c5dcc8',
+              backgroundColor: settingsOpen ? '#a1cca5' : 'rgba(255,255,255,0.08)',
               border: '1px solid',
-              borderColor: settingsOpen ? '#63A6A0' : 'rgba(255,255,255,0.15)',
+              borderColor: settingsOpen ? '#a1cca5' : 'rgba(255,255,255,0.15)',
             }}
           >
             <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor">
@@ -215,7 +215,7 @@ export default function EditorClient() {
             onClick={handleExport}
             disabled={exporting}
             className="flex items-center gap-1.5 font-semibold text-sm rounded-lg px-4 py-1.5 transition-colors shadow disabled:opacity-60 disabled:cursor-not-allowed"
-            style={{ backgroundColor: '#2E7D8C', color: '#fff' }}
+            style={{ backgroundColor: '#709775', color: '#fff' }}
           >
             {exporting ? (
               <>
@@ -241,13 +241,13 @@ export default function EditorClient() {
       {settingsOpen && (
         <div
           className="flex-shrink-0 border-b z-10 shadow-sm"
-          style={{ backgroundColor: '#fff', borderColor: '#d4cfc0' }}
+          style={{ backgroundColor: '#fff', borderColor: '#e0e5ef' }}
         >
           <div className="px-5 py-3 flex flex-wrap gap-x-6 gap-y-3 items-start">
 
             {/* Title */}
             <div className="flex flex-col gap-1 min-w-[200px] flex-1">
-              <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#556f75' }}>
+              <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#6b7a99' }}>
                 Document Title
               </label>
               <input
@@ -256,14 +256,14 @@ export default function EditorClient() {
                 onChange={e => setTitle(e.target.value)}
                 placeholder="Title…"
                 className="border rounded px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-offset-0"
-                style={{ borderColor: '#d4cfc0', color: '#2E7D8C' }}
+                style={{ borderColor: '#d0d8ea', color: '#415d43' }}
               />
             </div>
 
             {/* Subtitle */}
             <div className="flex flex-col gap-1 min-w-[200px] flex-1">
-              <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#556f75' }}>
-                Subtitle <span className="normal-case font-normal" style={{ color: '#9aabc' }}>(shown in teal bar)</span>
+              <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#6b7a99' }}>
+                Subtitle <span className="normal-case font-normal" style={{ color: '#9aabc' }}>(shown in sage bar)</span>
               </label>
               <input
                 type="text"
@@ -271,12 +271,12 @@ export default function EditorClient() {
                 onChange={e => setSubtitle(e.target.value)}
                 placeholder="e.g. Fonctionnel et Technique…"
                 className="border rounded px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-offset-0"
-                style={{ borderColor: '#d4cfc0', color: '#2E7D8C' }}
+                style={{ borderColor: '#d0d8ea', color: '#415d43' }}
               />
             </div>
 
             {/* Divider */}
-            <div className="hidden lg:block w-px self-stretch" style={{ backgroundColor: '#d4cfc0' }} />
+            <div className="hidden lg:block w-px self-stretch" style={{ backgroundColor: '#e0e5ef' }} />
 
             {/* Meta fields */}
             {metaEntries.map(([id, field]) => (
@@ -288,7 +288,7 @@ export default function EditorClient() {
                   />
                   <label
                     className="text-xs font-semibold uppercase tracking-wider cursor-pointer select-none"
-                    style={{ color: field.enabled ? '#2E7D8C' : '#9aabc' }}
+                    style={{ color: field.enabled ? '#415d43' : '#9aabc' }}
                     onClick={() => updateMeta(id, { enabled: !field.enabled })}
                   >
                     {field.label.replace(':', '')}
@@ -300,7 +300,7 @@ export default function EditorClient() {
                   onChange={e => updateMeta(id, { value: e.target.value })}
                   disabled={!field.enabled}
                   className="border rounded px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
-                  style={{ borderColor: '#d4cfc0', color: '#2E7D8C' }}
+                  style={{ borderColor: '#d0d8ea', color: '#415d43' }}
                 />
               </div>
             ))}
@@ -312,13 +312,13 @@ export default function EditorClient() {
       <div className="flex flex-1 overflow-hidden">
 
         {/* Left — editor */}
-        <div className="w-1/2 flex flex-col border-r" style={{ borderColor: '#d4cfc0', backgroundColor: '#fff' }}>
+        <div className="w-1/2 flex flex-col border-r" style={{ borderColor: '#d5ddd6', backgroundColor: '#fff' }}>
           <div
             className="flex-shrink-0 flex items-center gap-2 px-4 py-2 border-b"
-            style={{ backgroundColor: '#F2EFE6', borderColor: '#E8E4D6' }}
+            style={{ backgroundColor: '#fafaf7', borderColor: '#e9ede7' }}
           >
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#2E7D8C' }} />
-            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#556f75' }}>
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#709775' }} />
+            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#5f7268' }}>
               Markdown
             </span>
           </div>
@@ -326,13 +326,13 @@ export default function EditorClient() {
         </div>
 
         {/* Right — preview */}
-        <div className="w-1/2 flex flex-col" style={{ backgroundColor: '#E8E4D6' }}>
+        <div className="w-1/2 flex flex-col" style={{ backgroundColor: '#e9ede7' }}>
           <div
             className="flex-shrink-0 flex items-center gap-2 px-4 py-2 border-b"
-            style={{ backgroundColor: '#E8E4D6', borderColor: '#d4cfc0' }}
+            style={{ backgroundColor: '#f2f4f0', borderColor: '#d5ddd6' }}
           >
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#2E7D8C' }} />
-            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#556f75' }}>
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#415d43' }} />
+            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#5f7268' }}>
               PDF Preview
             </span>
           </div>

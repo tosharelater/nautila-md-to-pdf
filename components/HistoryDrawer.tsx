@@ -74,16 +74,16 @@ export default function HistoryDrawer({ open, onClose, onLoad }: Props) {
           width: '340px',
           backgroundColor: '#fff',
           transform: open ? 'translateX(0)' : 'translateX(-100%)',
-          borderRight: '1px solid #d4cfc0',
+          borderRight: '1px solid #e0e5ef',
         }}
       >
         {/* Header */}
         <div
           className="flex-shrink-0 flex items-center justify-between px-5 py-4 border-b"
-          style={{ backgroundColor: '#14333B', borderColor: '#1a4048' }}
+          style={{ backgroundColor: '#16281c', borderColor: '#1d3524' }}
         >
           <div className="flex items-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#63A6A0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a1cca5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/>
             </svg>
             <span className="font-semibold text-white text-sm tracking-wide">Conversion History</span>
@@ -99,23 +99,23 @@ export default function HistoryDrawer({ open, onClose, onLoad }: Props) {
         </div>
 
         {/* List */}
-        <div className="flex-1 overflow-y-auto" style={{ backgroundColor: '#F2EFE6' }}>
+        <div className="flex-1 overflow-y-auto" style={{ backgroundColor: '#fafaf7' }}>
           {loading ? (
             <div className="flex items-center justify-center h-32">
               <svg className="animate-spin w-6 h-6" viewBox="0 0 24 24" fill="none">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="#2E7D8C" strokeWidth="4"/>
-                <path className="opacity-75" fill="#2E7D8C" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="#415d43" strokeWidth="4"/>
+                <path className="opacity-75" fill="#415d43" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
               </svg>
             </div>
           ) : entries.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-40 gap-2" style={{ color: '#7d9296' }}>
+            <div className="flex flex-col items-center justify-center h-40 gap-2" style={{ color: '#9aabc0' }}>
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
               </svg>
               <span className="text-sm">No conversions yet</span>
             </div>
           ) : (
-            <ul className="divide-y" style={{ borderColor: '#d4cfc0' }}>
+            <ul className="divide-y" style={{ borderColor: '#e8edf5' }}>
               {entries.map(entry => (
                 <li
                   key={entry.id}
@@ -125,12 +125,12 @@ export default function HistoryDrawer({ open, onClose, onLoad }: Props) {
                   <div className="flex items-start justify-between gap-2">
                     <span
                       className="font-semibold text-sm leading-tight flex-1 truncate"
-                      style={{ color: '#2E7D8C' }}
+                      style={{ color: '#415d43' }}
                       title={entry.title}
                     >
                       {entry.title || 'Untitled'}
                     </span>
-                    <span className="flex-shrink-0 text-xs" style={{ color: '#7d9296' }}>
+                    <span className="flex-shrink-0 text-xs" style={{ color: '#9aabc0' }}>
                       {relativeTime(entry.createdAt)}
                     </span>
                   </div>
@@ -139,14 +139,14 @@ export default function HistoryDrawer({ open, onClose, onLoad }: Props) {
                   {entry.subtitle && (
                     <span
                       className="self-start text-xs px-1.5 py-0.5 rounded font-medium"
-                      style={{ backgroundColor: '#E8E4D6', color: '#2E7D8C' }}
+                      style={{ backgroundColor: '#e9ede7', color: '#415d43' }}
                     >
                       {entry.subtitle}
                     </span>
                   )}
 
                   {/* Excerpt */}
-                  <p className="text-xs leading-relaxed line-clamp-2" style={{ color: '#556f75' }}>
+                  <p className="text-xs leading-relaxed line-clamp-2" style={{ color: '#6b7a99' }}>
                     {excerpt(entry.markdown)}
                   </p>
 
@@ -155,7 +155,7 @@ export default function HistoryDrawer({ open, onClose, onLoad }: Props) {
                     <button
                       onClick={() => { onLoad(entry); onClose() }}
                       className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded transition-colors"
-                      style={{ backgroundColor: '#2E7D8C', color: '#fff' }}
+                      style={{ backgroundColor: '#415d43', color: '#fff' }}
                     >
                       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                         <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/>
@@ -166,7 +166,7 @@ export default function HistoryDrawer({ open, onClose, onLoad }: Props) {
                       onClick={() => handleDelete(entry.id)}
                       disabled={deleting === entry.id}
                       className="flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded border transition-colors disabled:opacity-50"
-                      style={{ borderColor: '#d4cfc0', color: '#e05252' }}
+                      style={{ borderColor: '#e0e5ef', color: '#e05252' }}
                     >
                       {deleting === entry.id ? (
                         <svg className="animate-spin w-3 h-3" viewBox="0 0 24 24" fill="none">
@@ -191,7 +191,7 @@ export default function HistoryDrawer({ open, onClose, onLoad }: Props) {
         {entries.length > 0 && (
           <div
             className="flex-shrink-0 px-4 py-2 border-t text-xs"
-            style={{ borderColor: '#d4cfc0', color: '#7d9296', backgroundColor: '#fff' }}
+            style={{ borderColor: '#e0e5ef', color: '#9aabc0', backgroundColor: '#fff' }}
           >
             {entries.length} conversion{entries.length !== 1 ? 's' : ''} saved
           </div>
